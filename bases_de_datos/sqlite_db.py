@@ -4,14 +4,15 @@ class Conexion():
     def __init__(self):
         try:
             self.con= sqlite3.connect("inventario.db")
+            self.cur = self.con.cursor()
             self.crearTablas()
+            self.crearAdmin()
         except Exception as ex: 
             print("Error al conectar: ",ex)
     
     def crearTablas(self):
-        cur = self.con.cursor()
         # Tabla de usuarios (para el login y roles)
-        cur.execute("""
+        self.cur.execute("""
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
             nombre TEXT NOT NULL, 
@@ -21,7 +22,7 @@ class Conexion():
             )""")
 
         # Tabla categorias (para organizar los productos)
-        cur.execute("""
+        self.cur.execute("""
         CREATE TABLE IF NOT EXISTS categorias (
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         nombre TEXT NOT NULL
@@ -29,7 +30,7 @@ class Conexion():
         """)
 
         #Tabla productos 
-        cur.execute("""
+        self.cur.execute("""
         CREATE TABLE IF NOT EXISTS productos (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
             codigo TEXT UNIQUE NOT NULL, 
@@ -42,7 +43,7 @@ class Conexion():
         """)
 
         #Tabla de Ventas 
-        cur.execute("""
+        self.cur.execute("""
         CREATE TABLE IF NOT EXISTS ventas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -53,7 +54,7 @@ class Conexion():
             """)    
         
         #Detalle de la venta (que productos se llevaron en cada venta)
-        cur.execute("""
+        self.cur.execute("""
         CREATE TABLE IF NOT EXISTS detalle_venta (
             id INTEGER PRIMARY KEY AUTOINCREMENT, 
             id_venta INTEGER, 
@@ -65,11 +66,35 @@ class Conexion():
         )
         """)
         self.con.commit()
+    
 
+    def crearAdmin(self):
+        try: 
+            self.cur.execute(
+                "SELECT * FROM usuarios WHERE usuario =?", ("admin",)
+            )
+            admin = self.cur.fetchone()
+            if admin is None:
+                self.cur.execute("""
+                    INSERT INTO usuarios (nombre, usuario, clave, rol)
+                    VALUES (?,?,?,?)
+                    """, ("Administrador", "admin", "admin123", "admin"))
+                self.con.commit()
+                print("Admin creado correctamente")
+            else:
+                print("El admin ya existe")
+        except Exception as ex:
+            print("Error al crear admin:", ex)
+
+#nuevo 
+    def conectar(self): 
+        return self.con  
+           
+# cierra conexion 
     def cerrar(self):
         self.con.close()
 
-#probar 
-con = Conexion()
-con.cerrar()
+if __name__ == "__main__":
+    con = Conexion()
+    con.cerrar()
 
