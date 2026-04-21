@@ -33,7 +33,7 @@ class Login():
             else:
                 print("Acceso de vendedor")
 
-            # aca desp abrimos la ventana de inventario
+            # desp abrimos la ventana de inventario
             # self.abrir_sistema()
 
         else:
