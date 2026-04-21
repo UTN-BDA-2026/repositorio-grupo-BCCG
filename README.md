@@ -88,3 +88,36 @@ contraseña: 1234
 cree carpeta data y models
 models: representa la estructura de los datos(la entidad)
 data: es la capa que habla con la base de datos
+
+Acciones que puede hacer segun el rol:
+1. Administrador (Dueño/Gerente)
+Tiene el control total. Su objetivo es gestionar el negocio y ver si es rentable 
+- Gestion de usuarios: Puede crear nuevos usuarios (ej: dar de alta a un vendedor nuevo) o despedirlos (borrarlos)
+- Control de Inventario: Es el unico que puede modificar el precio de los productos o eliminar articulos del sistema
+- Carga de Stock: Recibe la mercaderia de los camiones y actualiza las cantidades
+- Reporte de ventas: Puede ver cuanto se vendio en total, que productos se estan agotando y quien es el vendedor que mas factura
+
+2. Vendedor (Empleado de caja)
+No puede tocar la configuracion del sistema
+- Realizar Ventas: Su pantalla principal es el "punto de venta" (buscar producto, sumar al carrito y cobrar)
+- Consultar de Stock: Puede ver si hay un producto, pero no puede cambiar la cantidad manualmente; el stock solo baja cuando hace una venta
+- Consulta de Precios: puede ver cuanto cuesta algo, pero no puede editar el precio 
+- Perfil Propio: Puede ver sus propias ventas del dia, pero no las de sus compañeros
+
+En resumen: 
+VENDEDOR:
+-Busca productos
+-Registrar una venta
+-Ver stock actual
+
+ADMINISTRADOR:
+-Busca productos
+-Registrar una venta
+-Ver stock actual
+-Cambiar precios
+- Borrar productos 
+- Ver ganacias totales
+- Crear otros usuarios
+
+NOS ENFOCAMOS EN VENTA SIMPLE - TABLA DE PRODUCTOS - GESTION DE USUARIOS
+
