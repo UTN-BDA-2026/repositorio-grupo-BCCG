@@ -2,4 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+<<<<<<< HEAD
 *.db
+=======
+inventario.db
+>>>>>>> 39c08c5ab6b4cc80138960d713b7cf2857b62caf
