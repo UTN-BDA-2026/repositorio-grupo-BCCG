@@ -119,5 +119,8 @@ ADMINISTRADOR:
 - Ver ganacias totales
 - Crear otros usuarios
 
-NOS ENFOCAMOS EN VENTA SIMPLE - TABLA DE PRODUCTOS - GESTION DE USUARIOS
+
+nos enfocamos en venta simple - tabla de productos - gestion de usuarios
+
+
 
