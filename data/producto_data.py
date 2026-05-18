@@ -27,8 +27,7 @@ class ProductoData():
 
     def obtener_por_id(self, id_producto):
         self.db.cur.execute(
-            "SELECT * FROM productos WHERE id=?", (id_producto,))
-        
+            "SELECT * FROM productos WHERE id=?", (id_producto,)) 
         row = self.db.cur.fetchone()
         if row:
             return Producto(*row)
