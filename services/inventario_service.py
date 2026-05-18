@@ -40,3 +40,27 @@ class InventarioService():
         })
 
         print("Venta realizada correctamente")
+    
+    #para que el administrador pueda cargar stock
+    def agregar_stock(self, id_producto, cantidad):
+        producto = self.producto_data.obtener_por_id(id_producto)
+
+        if producto is None:
+            print("Producto no existe")
+            return
+
+        nuevo_stock = producto.stock_actual + cantidad
+
+        self.producto_data.actualizar_stock(
+            id_producto,
+            nuevo_stock
+        )
+
+        self.mongo.registrar_movimiento({
+            "id_producto": id_producto,
+            "tipo": "ENTRADA",
+            "cantidad": cantidad,
+            "motivo": "Reposicion"
+        })
+
+        print("Stock agregado correctamente")

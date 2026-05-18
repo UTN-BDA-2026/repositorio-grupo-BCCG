@@ -33,3 +33,20 @@ class ProductoData():
         if row:
             return Producto(*row)
         return None
+    
+    #para eliminar un producto
+    def eliminar_producto(self, id_producto):
+        self.db.cur.execute("""
+            DELETE FROM productos
+            WHERE id = ?
+        """, (id_producto,))
+        self.db.con.commit()
+    
+    #para actualizar precio
+    def actualizar_precio(self, id_producto, nuevo_precio):
+        self.db.cur.execute("""
+            UPDATE productos
+            SET precio = ?
+            WHERE id = ?
+        """, (nuevo_precio, id_producto))
+        self.db.con.commit()
