@@ -38,7 +38,6 @@ class InventarioService():
             "cantidad": cantidad,
             "motivo": "Venta"
         })
-
         print("Venta realizada correctamente")
     
     #para que el administrador pueda cargar stock
@@ -48,19 +47,15 @@ class InventarioService():
         if producto is None:
             print("Producto no existe")
             return
-
         nuevo_stock = producto.stock_actual + cantidad
-
         self.producto_data.actualizar_stock(
             id_producto,
             nuevo_stock
         )
-
         self.mongo.registrar_movimiento({
             "id_producto": id_producto,
             "tipo": "ENTRADA",
             "cantidad": cantidad,
             "motivo": "Reposicion"
         })
-
         print("Stock agregado correctamente")
