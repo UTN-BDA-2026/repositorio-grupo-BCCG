@@ -33,7 +33,6 @@ border-radius: 10px;</string>
     <property name="font">
      <font>
       <pointsize>16</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -59,7 +58,6 @@ border-radius: 10px;</string>
     <property name="font">
      <font>
       <pointsize>-1</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -113,7 +111,7 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>Productos</string>
+     <string>Inventario</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnStock">
@@ -206,7 +204,7 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>Volver</string>
+     <string>Salir</string>
     </property>
    </widget>
   </widget>
@@ -216,7 +214,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
