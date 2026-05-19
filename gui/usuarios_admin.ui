@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Estilo General de la Ventana */
+QWidget#Form {
+    background-color: #F8FAF6; /* Un blanco roto/claro muy elegante */
+}
+
+/* Estilo para el Título Principal */
+QLabel#label {
+    color: #2C3E50;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* Estilo para las etiquetas de texto (Nombre, Usuario, etc.) */
+QLabel {
+    color: #4A5568;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Campos de Texto e Inputs */
+QLineEdit, QComboBox {
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 13px;
+    color: #334155;
+}
+
+QLineEdit:focus, QComboBox:focus {
+    border: 2px solid #FF9100; /* Resalta en naranja al hacer clic */
+}
+
+/* La Tabla de Usuarios */
+QTableWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    gridline-color: #F1F5F9;
+    font-size: 13px;
+}
+
+QHeaderView::section {
+    background-color: #334155; /* Cabecera oscura para contraste pro */
+    color: #FFFFFF;
+    padding: 6px;
+    font-weight: bold;
+    border: none;
+}
+
+/* --- ESTILOS DE LOS BOTONES --- */
+
+/* Botón Crear (Naranja Corporativo) */
+QPushButton#btn_registrar {
+    background-color: #FF9100;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_registrar:hover {
+    background-color: #FB8C00;
+}
+
+/* Botón Eliminar (Gris/Rojo sutil de advertencia) */
+QPushButton#btn_eliminar {
+    background-color: #FEE2E2; /* Fondo rojo muy clarito */
+    color: #EF4444; /* Texto rojo */
+    border: 1px solid #FCA5A5;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_eliminar:hover {
+    background-color: #EF4444;
+    color: #FFFFFF;
+}
+
+/* Botón Volver (Estilo elegante y neutro) */
+QPushButton#btn_volver {
+    background-color: #64748B; /* Gris slate */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_volver:hover {
+    background-color: #475569;
+}</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>20</y>
+     <width>231</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>GESTION DE USUARIOS </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nombre: </string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>120</y>
+     <width>61</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Usuario:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>160</y>
+     <width>49</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Clave: </string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_nombre">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>70</y>
+     <width>250</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_usuario">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>110</y>
+     <width>250</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="txt_clave">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>150</y>
+     <width>250</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::EchoMode::Password</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>200</y>
+     <width>49</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Rol: </string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="combo_rol">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>190</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>admin</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>vendedor</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="btn_registrar">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>230</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Crear Usuario</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tabla_usuarios">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>290</y>
+     <width>401</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Nombre</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Usuario</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Rol</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QPushButton" name="btn_eliminar">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>440</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Eliminar Usuario</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>270</y>
+     <width>161</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Lista de Usuarios</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_volver">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>480</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Volver al Panel</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
