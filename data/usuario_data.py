@@ -20,6 +20,7 @@ class UsuarioData():
         except Exception as ex: 
             print("Error en login", ex)
             return None
+        
     #funciones para el administrador de crear y eliminar usuarios, y obtener lista de usuarios
     def crear_usuario(self, nombre, usuario, clave, rol):
         try:
