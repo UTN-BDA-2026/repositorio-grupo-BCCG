@@ -1,6 +1,8 @@
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from gui.ventas_admin import Ventas
+from gui.usuarios_admin import Usuarios
+
 import os
 
 class Admin():
@@ -64,7 +66,11 @@ class Admin():
         self.ventana.close()
 
     def abrir_usuarios(self):
-        print("Abrir gestión de usuarios")
+        self.ventana.hide()
+
+        self.usuarios = Usuarios(
+            volver_callback = self.mostrar_admin
+        )
 
     def abrir_productos(self):
         print("Abrir gestión de productos")
