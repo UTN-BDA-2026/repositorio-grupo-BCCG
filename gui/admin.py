@@ -1,30 +1,28 @@
 from PySide6.QtUiTools import QUiLoader
+from PySide6.QtCore import QFile
+from gui.ventas_admin import Ventas
 import os
 
 class Admin():
     def __init__(self, usuario):
         loader = QUiLoader()
-
         # cargar archivo admin.ui
         ruta = os.path.join(os.path.dirname(__file__), "admin.ui")
-        self.ventana = loader.load(ruta)
+        file = QFile(ruta)
+        file.open(QFile.ReadOnly)
+        self.ventana = loader.load(file)
+        file.close()
+
         self.usuario = usuario
         try:
             self.ventana.lblUsuario.setText(f"Admin: {usuario.nombre}")
         except:
             pass
-
         # inici interfaz
         self.initGUI()
         self.ventana.show()
 
     def initGUI(self):
-
-        # boton volver
-        try:
-            self.ventana.btnVolver.clicked.connect(self.volver_login)
-        except:
-            pass
         # botones del administrador
         try:
             self.ventana.btnUsuarios.clicked.connect(self.abrir_usuarios)
@@ -39,9 +37,25 @@ class Admin():
         except:
             pass
         try:
-            self.ventana.btnVentas.clicked.connect(self.abrir_ventas)
+            self.ventana.btnVentas.clicked.connect(self.abrir_ventas_admin)
         except:
             pass
+        try:
+            self.ventana.btnVolver.clicked.connect(self.volver_login)
+        except:
+            pass
+
+    def abrir_ventas_admin(self):
+        self.ventana.hide()  # en vez de cerrar (mejor experiencia usuario)
+
+        self.ventas = Ventas(
+            self.usuario,
+            volver_callback=self.mostrar_admin
+        )
+
+    def mostrar_admin(self):
+        self.ventana.show()
+
     # volver al login
     def volver_login(self):
         from gui.login import Login
@@ -57,6 +71,3 @@ class Admin():
 
     def abrir_stock(self):
         print("Abrir carga de stock")
-
-    def abrir_ventas(self):
-        print("Abrir reportes de ventas")
