@@ -102,7 +102,7 @@ border-color: rgb(255, 170, 0);
     border: 2px solid #FF9100;
     padding: 5px;
     background-color: white;
-   
+    color: black;
 }
 
 QLineEdit:focus {
@@ -193,6 +193,7 @@ QPushButton:hover {
     padding: 5px;
     background-color: white;
     selection-background-color: #FFB347;
+    color: black;
 }
 
 QLineEdit:focus {
