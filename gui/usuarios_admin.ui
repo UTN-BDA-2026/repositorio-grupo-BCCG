@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>650</height>
+    <width>600</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -111,7 +111,7 @@ QPushButton#btn_volver:hover {
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>170</x>
      <y>20</y>
      <width>231</width>
      <height>31</height>
@@ -190,7 +190,7 @@ QPushButton#btn_volver:hover {
     </rect>
    </property>
    <property name="echoMode">
-    <enum>QLineEdit::EchoMode::Password</enum>
+    <enum>QLineEdit::Normal</enum>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -211,7 +211,7 @@ QPushButton#btn_volver:hover {
     <rect>
      <x>90</x>
      <y>190</y>
-     <width>91</width>
+     <width>111</width>
      <height>31</height>
     </rect>
    </property>
@@ -229,7 +229,7 @@ QPushButton#btn_volver:hover {
   <widget class="QPushButton" name="btn_registrar">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>200</x>
      <y>230</y>
      <width>150</width>
      <height>30</height>
@@ -242,8 +242,8 @@ QPushButton#btn_volver:hover {
   <widget class="QTableWidget" name="tabla_usuarios">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>290</y>
+     <x>100</x>
+     <y>300</y>
      <width>401</width>
      <height>131</height>
     </rect>
@@ -272,8 +272,8 @@ QPushButton#btn_volver:hover {
   <widget class="QPushButton" name="btn_eliminar">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>440</y>
+     <x>200</x>
+     <y>450</y>
      <width>150</width>
      <height>30</height>
     </rect>
@@ -298,8 +298,8 @@ QPushButton#btn_volver:hover {
   <widget class="QPushButton" name="btn_volver">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>480</y>
+     <x>200</x>
+     <y>520</y>
      <width>150</width>
      <height>30</height>
     </rect>

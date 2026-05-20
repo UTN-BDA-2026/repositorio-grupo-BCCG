@@ -77,7 +77,7 @@ QTableCornerButton::section {
    </attribute>
    <row>
     <property name="text">
-     <string>New Row</string>
+     <string>      </string>
     </property>
    </row>
    <column>
