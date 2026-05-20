@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: white;</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>30</y>
+     <width>261</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #333333;</string>
+   </property>
+   <property name="text">
+    <string>Productos con bajo stock</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tablaStock">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>60</y>
+     <width>151</width>
+     <height>192</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTableWidget {
+    background-color: white;
+    border: 1px solid #CFCFCF;
+    gridline-color: #E5E5E5;
+    font-size: 13px;
+    color: #333333;
+    selection-background-color: #D6E4F0;
+}
+
+QHeaderView::section {
+    background-color: #2F5D8C;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    border: none;
+    height: 30px;
+}
+
+QTableCornerButton::section {
+    background-color: #2F5D8C;
+    border: none;
+}</string>
+   </property>
+   <attribute name="horizontalHeaderStretchLastSection">
+    <bool>false</bool>
+   </attribute>
+   <row>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </row>
+   <column>
+    <property name="text">
+     <string>Producto</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Stock</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QPushButton" name="btnVolver">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>260</y>
+     <width>130</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #777777;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #666666;
+}</string>
+   </property>
+   <property name="text">
+    <string>Salir</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
