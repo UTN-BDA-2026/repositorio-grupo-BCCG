@@ -54,8 +54,7 @@ class Ventas():
 
     def volver(self):
 
-        self.ventana.close()
-
+        self.ventana.hide()
         if self.volver_callback:
             self.volver_callback()
 

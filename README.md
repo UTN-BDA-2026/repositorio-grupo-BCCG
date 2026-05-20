@@ -3,7 +3,7 @@ Sistema de Inventario de Tienda (Inventario)
 DESCRIPCION DEL PROYECTO
 Este proyecto consiste en el desarrollo de un Sistema de Inventario de Tienda, cuyo objetivo es gestionar productos, categorias y ventas de manera eficiente.
 
-El sistema utiliza un modelo hibrido de bases de datos, combinanco una base de datos relacional para la gestion estructurada de los datos y una base de datos no relacional para almacenar los registros historicos del sistema, los dos tipos de bases de datos que usaremos son:
+El sistema utiliza un modelo hibrido de bases de datos, combinando una base de datos relacional para la gestion estructurada de los datos y una base de datos no relacional para almacenar los registros historicos del sistema, los dos tipos de bases de datos que usaremos son:
  - SQLite3 para almacenar los datos estructurados del inventario
  - MongoDB para almacenar el historial de movimientos 
 La base relacional permite mantener la integridad de los datos y las relaciones entre entidades, mientras que la base no relacional ofrece flexibilidad para almacenar informacion del movimiento del sistema
@@ -35,7 +35,7 @@ No Relacional (MongoDB)
 Cada vez que se realiza una operación importante (como una venta o modificación de stock), el sistema registra el cambio tanto en la base relacional como en la base no relacional.
 
 MODELO DE DATOS RELACIONAL
-Tabla: cadegorias
+Tabla: categorias
  - id
  - nombre
 Tabla: productos
@@ -83,7 +83,7 @@ en la terminal pones python app.py
 
 en el login poner estos datos 
 usuario: admin
-contraseña: 1234
+contraseña: admin123
 
 cree carpeta data y models
 models: representa la estructura de los datos(la entidad)

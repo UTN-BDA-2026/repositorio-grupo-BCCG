@@ -19,7 +19,7 @@ QWidget#Form {
     background-color: #F8FAF6; /* Un blanco roto/claro muy elegante */
 }
 
-/* Estilo para el Título Principal */
+
 QLabel#label {
     color: #2C3E50;
     font-size: 18px;
