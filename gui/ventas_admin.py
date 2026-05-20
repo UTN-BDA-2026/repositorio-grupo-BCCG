@@ -1,6 +1,7 @@
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from gui.bajo_stock import StockBajo
+from gui.mejor_vendedor import MejorVendedor
 import os
 
 class Ventas():
@@ -44,6 +45,13 @@ class Ventas():
         except:
             pass
 
+        try:
+            self.ventana.btnMejorVendedor.clicked.connect(
+                self.abrir_mejor_vendedor
+            )
+        except:
+            pass
+
     def volver(self):
 
         self.ventana.close()
@@ -54,6 +62,15 @@ class Ventas():
     def abrir_stock_bajo(self):
 
         self.stock = StockBajo(
+            self.usuario,
+            volver_callback=self.mostrar_ventas
+        )
+
+        self.ventana.close()
+
+    def abrir_mejor_vendedor(self):
+
+        self.mejor = MejorVendedor(
             self.usuario,
             volver_callback=self.mostrar_ventas
         )
