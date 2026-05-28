@@ -215,6 +215,19 @@ QPushButton#btn_volver:hover {
      <height>31</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    color: black;
+    background-color: white;
+}
+
+QComboBox QAbstractItemView {
+    color: black;
+    background-color: white;
+    selection-background-color: #3498db;
+}
+</string>
+   </property>
    <item>
     <property name="text">
      <string>admin</string>
@@ -247,6 +260,19 @@ QPushButton#btn_volver:hover {
      <width>401</width>
      <height>131</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTableWidget {
+    color: black;
+    background-color: white;
+    gridline-color: gray;
+}
+
+QHeaderView::section {
+    background-color: #34495e;
+    color: white;
+    font-weight: bold;
+}</string>
    </property>
    <column>
     <property name="text">

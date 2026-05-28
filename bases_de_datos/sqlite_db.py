@@ -5,6 +5,7 @@ class Conexion():
         try:
             self.con= sqlite3.connect("inventario.db")
             self.cur = self.con.cursor()
+            self.cur.execute("PRAGMA foreign_keys = ON") #para las claves foraneas
             self.crearTablas()
             self.crearAdmin()
         except Exception as ex: 
@@ -65,8 +66,26 @@ class Conexion():
             FOREIGN KEY (id_producto) REFERENCES productos(id)
         )
         """)
+        
+        # índice para busquedas de productos por nombre
+        self.cur.execute("""
+        CREATE INDEX IF NOT EXISTS idx_producto_nombre
+        ON productos(nombre)
+        """)
+
+        # índice para busquedas por categoria
+        self.cur.execute("""
+        CREATE INDEX IF NOT EXISTS idx_producto_categoria
+        ON productos(id_categoria)
+        """)
+
+        # índice para consultas de ventas por fecha
+        self.cur.execute("""
+        CREATE INDEX IF NOT EXISTS idx_ventas_fecha
+        ON ventas(fecha)
+        """)
         self.con.commit()
-    
+
 
     def crearAdmin(self):
         try: 
