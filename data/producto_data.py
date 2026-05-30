@@ -1,14 +1,13 @@
-from bases_de_datos.sqlite_db import Conexion
+#from bases_de_datos.sqlite_db import Conexion
 from model.producto import Producto
 
 class ProductoData():
-    def __init__(self):
-        self.db = Conexion()
+    def __init__(self, db):
+        self.db = db
 
     def obtener_todos(self):
         self.db.cur.execute(
             "SELECT * FROM productos")
-        
         rows = self.db.cur.fetchall()
         return [Producto(*row) for row in rows]
 
@@ -23,7 +22,7 @@ class ProductoData():
         self.db.cur.execute("""
             UPDATE productos SET stock_actual=? WHERE id=?
         """, (nuevo_stock, id_producto))
-        self.db.con.commit()
+        
 
     def obtener_por_id(self, id_producto):
         self.db.cur.execute(
