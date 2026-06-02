@@ -38,7 +38,9 @@ class Login():
                 self.login.close()
             # acceso vendedor
             else:
-                print("Acceso de vendedor")
+                from gui.vendedor import Vendedor
+                self.vendedor = Vendedor(user)
+                self.login.close()                
         else:
             self.login.lblError.setText(
                 "Usuario o contraseña incorrecto"
