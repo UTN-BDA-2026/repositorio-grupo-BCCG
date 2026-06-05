@@ -1,4 +1,8 @@
 import sqlite3
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  #carga las variables de entorno desde el archivo .env
 
 class Conexion():
     def __init__(self):
@@ -89,17 +93,26 @@ class Conexion():
 
     def crearAdmin(self):
         try: 
+            # Traer los valores únicamente desde el archivo .env
+            admin_user = os.getenv("ADMIN_USER")
+            admin_pass = os.getenv("ADMIN_PASSWORD")
+
+            # Si por alguna razón el archivo .env está vacío, no hace nada y avisa
+            if not admin_user or not admin_pass:
+                print("Error: No se encontraron las credenciales del Admin en el archivo .env")
+                return
+
             self.cur.execute(
-                "SELECT * FROM usuarios WHERE usuario =?", ("admin",)
+                "SELECT * FROM usuarios WHERE usuario =?", (admin_user,)
             )
             admin = self.cur.fetchone()
             if admin is None:
                 self.cur.execute("""
                     INSERT INTO usuarios (nombre, usuario, clave, rol)
                     VALUES (?,?,?,?)
-                    """, ("Administrador", "admin", "admin123", "admin"))
+                    """, ("Administrador", admin_user, admin_pass, "admin"))
                 self.con.commit()
-                print("Admin creado correctamente")
+                print("Admin creado correctamente desde variables de entorno")
             else:
                 print("El admin ya existe")
         except Exception as ex:
