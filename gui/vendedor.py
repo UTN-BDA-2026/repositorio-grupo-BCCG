@@ -32,6 +32,10 @@ class Vendedor():
 
     def initGUI(self):
 
+        self.ventana.btnVentas.clicked.connect(
+            self.abrir_realizar_venta
+        )
+
         self.ventana.btnStock.clicked.connect(
             self.abrir_stock
         )
@@ -40,25 +44,18 @@ class Vendedor():
             self.abrir_precios
         )
 
-        self.ventana.btnVentas.clicked.connect(
-            self.abrir_mis_ventas
-        )
-
         self.ventana.btnSalir.clicked.connect(
             self.volver_login
         )
 
-    def abrir_venta(self):
-        print("Abrir punto de venta")
+    def abrir_realizar_venta(self):
+        print("Abrir realizar venta")
 
     def abrir_stock(self):
         print("Abrir consulta de stock")
 
     def abrir_precios(self):
         print("Abrir consulta de precios")
-
-    def abrir_mis_ventas(self):
-        print("Abrir mis ventas")
 
     def volver_login(self):
 
