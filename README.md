@@ -122,5 +122,12 @@ ADMINISTRADOR:
 
 nos enfocamos en venta simple - tabla de productos - gestion de usuarios
 
+1.  activar archivo .env 
+.venv\Scripts\Activate.ps1
+
+2. instalar librerias 
+pip install -r requirements.txt
+
+
 
 
