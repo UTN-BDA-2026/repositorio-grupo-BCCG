@@ -29,7 +29,6 @@ border-radius: 10px;</string>
    <property name="font">
     <font>
      <pointsize>16</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -52,7 +51,6 @@ border-radius: 10px;</string>
    <property name="font">
     <font>
      <pointsize>14</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -66,73 +64,11 @@ border-radius: 10px;</string>
     <string>Vendedor:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnStock">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>200</y>
-     <width>150</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
-    background-color: #FF9100;
-    color: white;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 14px;
-    border: 1px solid #D47900;
-}
-
-QPushButton:hover {
-    background-color: #E68200;
-}
-
-QPushButton:pressed {
-    background-color: #CC7400;
-}l</string>
-   </property>
-   <property name="text">
-    <string>Consultar Stock</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnPrecio">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>270</y>
-     <width>150</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton {
-    background-color: #FF9100;
-    color: white;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 14px;
-    border: 1px solid #D47900;
-}
-
-QPushButton:hover {
-    background-color: #E68200;
-}
-
-QPushButton:pressed {
-    background-color: #CC7400;
-}l</string>
-   </property>
-   <property name="text">
-    <string>Consultar Precio</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btnVentas">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>340</y>
+     <x>220</x>
+     <y>250</y>
      <width>150</width>
      <height>30</height>
     </rect>
@@ -162,8 +98,8 @@ QPushButton:pressed {
   <widget class="QPushButton" name="btnSalir">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>410</y>
+     <x>220</x>
+     <y>340</y>
      <width>150</width>
      <height>30</height>
     </rect>
@@ -190,11 +126,11 @@ QPushButton:pressed {
     <string>Salir</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btnRealizarVenta">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>130</y>
+     <x>220</x>
+     <y>160</y>
      <width>150</width>
      <height>30</height>
     </rect>
