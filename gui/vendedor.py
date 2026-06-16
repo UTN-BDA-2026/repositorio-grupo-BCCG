@@ -3,6 +3,7 @@ from PySide6.QtCore import QFile
 import os
 
 class Vendedor():
+
     def __init__(self, usuario):
 
         loader = QUiLoader()
@@ -31,26 +32,38 @@ class Vendedor():
 
     def initGUI(self):
 
-        self.ventana.btnVentas.clicked.connect(
-            self.abrir_ventas
-        )
-
         self.ventana.btnStock.clicked.connect(
             self.abrir_stock
+        )
+
+        self.ventana.btnPrecio.clicked.connect(
+            self.abrir_precios
+        )
+
+        self.ventana.btnVentas.clicked.connect(
+            self.abrir_mis_ventas
         )
 
         self.ventana.btnSalir.clicked.connect(
             self.volver_login
         )
 
-    def abrir_ventas(self):
-        print("Abrir ventas vendedor")
+    def abrir_venta(self):
+        print("Abrir punto de venta")
 
     def abrir_stock(self):
-        print("Abrir stock vendedor")
+        print("Abrir consulta de stock")
+
+    def abrir_precios(self):
+        print("Abrir consulta de precios")
+
+    def abrir_mis_ventas(self):
+        print("Abrir mis ventas")
 
     def volver_login(self):
+
         from gui.login import Login
 
         self.login = Login()
+
         self.ventana.close()
