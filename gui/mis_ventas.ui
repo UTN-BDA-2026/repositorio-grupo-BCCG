@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FormMisVentas</class>
+ <widget class="QWidget" name="FormMisVentas">
+  <property name="minimumSize">
+   <size>
+    <width>600</width>
+    <height>450</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Estilo General de la Ventana */
+QWidget#Form {
+    background-color: #F8FAF6; /* Un blanco roto/claro muy elegante */
+}
+
+
+QLabel#label {
+    color: #2C3E50;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* Estilo para las etiquetas de texto (Nombre, Usuario, etc.) */
+QLabel {
+    color: #4A5568;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Campos de Texto e Inputs */
+QLineEdit, QComboBox {
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 13px;
+    color: #334155;
+}
+
+QLineEdit:focus, QComboBox:focus {
+    border: 2px 
+}
+
+/* La Tabla de Usuarios */
+QTableWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    gridline-color: #FF9100;
+    font-size: 13px;
+}
+
+QHeaderView::section {
+    background-color: #334155; /* Cabecera oscura para contraste pro */
+    color: #FFFFFF;
+    padding: 6px;
+    font-weight: bold;
+    border: none;
+}
+
+/* --- ESTILOS DE LOS BOTONES --- */
+
+/* Botón Crear (Naranja Corporativo) */
+QPushButton#btn_registrar {
+    background-color: #FF9100;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_registrar:hover {
+    background-color: #FB8C00;
+}
+
+/* Botón Eliminar (Gris/Rojo sutil de advertencia) */
+QPushButton#btn_eliminar {
+    background-color: #FEE2E2; /* Fondo rojo muy clarito */
+    color: #EF4444; /* Texto rojo */
+    border: 1px solid #FCA5A5;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_eliminar:hover {
+    background-color: #EF4444;
+    color: #FFFFFF;
+}
+
+/* Botón Volver (Estilo elegante y neutro) */
+QPushButton#btn_volver {
+    background-color: #64748B; /* Gris slate */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_volver:hover {
+    background-color: #475569;
+}
+
+</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>10</y>
+     <width>306</width>
+     <height>38</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;HISTORIAL DE MIS VENTAS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tablaVentas">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>551</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>ID Venta</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Fecha y Hora</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Total Facturado</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QPushButton" name="btn_volver">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>430</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Volver al Panel</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
