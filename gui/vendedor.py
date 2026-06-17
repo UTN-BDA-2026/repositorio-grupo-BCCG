@@ -56,6 +56,9 @@ class Vendedor():
 
 
     def abrir_mis_ventas(self):
+        from gui.mis_ventas import MisVentas
+        self.ventana.hide()
+        self.mis_ventas = MisVentas(self.usuario, volver_callback=self.mostrar_vendedor)
         print("Mostrar ventas")
 
 
