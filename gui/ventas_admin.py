@@ -2,6 +2,7 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from gui.bajo_stock import StockBajo
 from gui.mejor_vendedor import MejorVendedor
+from services.reportes_service import ReportesService #importamos el servicio de reportes
 import os
 
 class Ventas():
@@ -24,17 +25,25 @@ class Ventas():
 
         self.usuario = usuario
         self.volver_callback = volver_callback
+        self.reportes_service = ReportesService() #instancia del servicio de reportes
 
         self.initGUI()
-
+     
         self.ventana.show()
 
     def initGUI(self):
-
+        try: #conectamos el boton de calcular total general
+            self.ventana.btnTotalVendido.clicked.connect(
+                self.calcularTotalGeneral
+            )    
+        except:
+            pass
+        
         try:
             self.ventana.btnVolver.clicked.connect(
                 self.volver
-            )
+                )
+           
         except:
             pass
 
@@ -52,6 +61,10 @@ class Ventas():
         except:
             pass
 
+    def calcularTotalGeneral(self):
+        total= self.reportes_service.total_vendido()
+        self.ventana.lblTotalVendido.setText(f"${total:.2f}")
+    
     def volver(self):
 
         self.ventana.hide()
