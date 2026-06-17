@@ -17,8 +17,98 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: white;background-color: white;
-border-radius: 10px;</string>
+   <string notr="true">QWidget#Form {
+    background-color: #F8FAF6; /* Un blanco roto/claro muy elegante */
+}
+
+
+QLabel#label {
+    color: #2C3E50;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* Estilo para las etiquetas de texto (Nombre, Usuario, etc.) */
+QLabel {
+    color: #4A5568;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Campos de Texto e Inputs */
+QLineEdit, QComboBox {
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 13px;
+    color: #334155;
+}
+
+QLineEdit:focus, QComboBox:focus {
+    border: 2px solid #FF9100; /* Resalta en naranja al hacer clic */
+}
+
+/* La Tabla de Usuarios */
+QTableWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    gridline-color: #F1F5F9;
+    font-size: 13px;
+}
+
+QHeaderView::section {
+    background-color: #334155; /* Cabecera oscura para contraste pro */
+    color: #FFFFFF;
+    padding: 6px;
+    font-weight: bold;
+    border: none;
+}
+
+/* --- ESTILOS DE LOS BOTONES --- */
+
+/* Botón Crear (Naranja Corporativo) */
+QPushButton#btn_registrar {
+    background-color: #FF9100;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_registrar:hover {
+    background-color: #FB8C00;
+}
+
+/* Botón Eliminar (Gris/Rojo sutil de advertencia) */
+QPushButton#btn_eliminar {
+    background-color: #FEE2E2; /* Fondo rojo muy clarito */
+    color: #EF4444; /* Texto rojo */
+    border: 1px solid #FCA5A5;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_eliminar:hover {
+    background-color: #EF4444;
+    color: #FFFFFF;
+}
+
+/* Botón Volver (Estilo elegante y neutro) */
+QPushButton#btn_volver {
+    background-color: #64748B; /* Gris slate */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_volver:hover {
+    background-color: #475569;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -26,13 +116,14 @@ border-radius: 10px;</string>
      <rect>
       <x>170</x>
       <y>30</y>
-      <width>251</width>
+      <width>271</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>16</pointsize>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -43,7 +134,7 @@ border-radius: 10px;</string>
      <string notr="true">color: #333333;</string>
     </property>
     <property name="text">
-     <string>Panel de Administrador</string>
+     <string>PANEL DE ADMINISTRADOR</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnUsuarios">
@@ -58,6 +149,7 @@ border-radius: 10px;</string>
     <property name="font">
      <font>
       <pointsize>-1</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -187,24 +279,24 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: #FF9100;
+    background-color: #6C757D;
     color: white;
     border-radius: 10px;
     font-weight: bold;
     font-size: 14px;
-    border: 1px solid #D47900;
+    border: 1px solid #5A6268;
 }
 
 QPushButton:hover {
-    background-color: #E68200;
+    background-color: #5A6268;
 }
 
 QPushButton:pressed {
-    background-color: #CC7400;
+    background-color: #4E555B;
 }</string>
     </property>
     <property name="text">
-     <string>Salir</string>
+     <string>Volver</string>
     </property>
    </widget>
   </widget>
@@ -214,7 +306,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
