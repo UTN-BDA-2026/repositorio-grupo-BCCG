@@ -14,7 +14,9 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: white;</string>
+   <string notr="true">QDialog#Dialog {
+   background-color: #FFFFFF;
+}</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -150,15 +152,20 @@ QPushButton:hover {
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
-    background-color: #FF9100;
+    background-color: #6C757D;
     color: white;
     border-radius: 10px;
     font-weight: bold;
     font-size: 14px;
+    border: 1px solid #5A6268;
 }
 
 QPushButton:hover {
-    background-color: #E68200;
+    background-color: #5A6268;
+}
+
+QPushButton:pressed {
+    background-color: #4E555B;
 }</string>
    </property>
    <property name="text">

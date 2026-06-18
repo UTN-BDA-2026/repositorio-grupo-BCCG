@@ -14,10 +14,9 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget#Form {
-    background-color: #F8FAF6; /* Un blanco roto/claro muy elegante */
+   <string notr="true">QDialog#Dialog {
+    background-color: #FFFFFF;
 }
-
 
 QLabel#label {
     color: #2C3E50;

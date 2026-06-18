@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>559</width>
+    <width>644</width>
     <height>600</height>
    </rect>
   </property>
@@ -14,9 +14,10 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget#Form {
-    background-color: #F8FAF6; /* Un blanco roto/claro muy elegante */
+   <string notr="true">QWidget#FormStock {
+    background-color: #FFFFFF; /* Blanco puro, impecable y brillante */
 }
+
 
 
 QLabel#label {
@@ -110,8 +111,8 @@ QPushButton#btn_volver:hover {
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>20</y>
+     <x>210</x>
+     <y>10</y>
      <width>221</width>
      <height>31</height>
     </rect>
@@ -200,7 +201,7 @@ QPushButton#btn_volver:hover {
   <widget class="QPushButton" name="btnAgregar">
    <property name="geometry">
     <rect>
-     <x>200</x>
+     <x>240</x>
      <y>210</y>
      <width>150</width>
      <height>30</height>
@@ -232,7 +233,7 @@ QPushButton:pressed {
   <widget class="QPushButton" name="btnConfirmar">
    <property name="geometry">
     <rect>
-     <x>200</x>
+     <x>240</x>
      <y>500</y>
      <width>150</width>
      <height>30</height>
@@ -284,9 +285,9 @@ QPushButton:pressed {
   <widget class="QTableWidget" name="tablaStock">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>20</x>
      <y>280</y>
-     <width>401</width>
+     <width>591</width>
      <height>192</height>
     </rect>
    </property>
@@ -379,7 +380,7 @@ QPushButton:pressed {
   <widget class="QPushButton" name="btnCancelar">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>460</x>
      <y>500</y>
      <width>150</width>
      <height>30</height>

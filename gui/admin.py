@@ -77,3 +77,10 @@ class Admin():
 
     def abrir_stock(self):
         print("Abrir carga de stock")
+        from gui.gestion_stock import StockAdmin 
+        
+        #conexión de base de datos asociada al usuario o sistema
+        base_datos = getattr(self.usuario, 'db', None)
+        
+        self.ventana_stock = StockAdmin(self.usuario, volver_callback=self.mostrar_admin, db=base_datos)
+        self.ventana.hide()
