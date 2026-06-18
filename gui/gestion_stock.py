@@ -6,9 +6,9 @@ from data.producto_data import ProductoData
 
 class StockAdmin():
 
-    def __init__(self, usuario, volver_callback=None):
+    def __init__(self, usuario, volver_callback=None, db=None):
         loader = QUiLoader()
-        ruta = os.path.join(os.path.dirname(__file__), "stock_admin.ui")
+        ruta = os.path.join(os.path.dirname(__file__), "gestion_stock.ui")
         file = QFile(ruta)
         file.open(QFile.ReadOnly)
         self.ventana = loader.load(file)
@@ -16,7 +16,7 @@ class StockAdmin():
 
         self.usuario = usuario
         self.volver_callback = volver_callback
-        self.producto_service = ProductoService()
+        self.producto_data = ProductoData(db) 
         
         self.productos_en_lote = []
 
@@ -35,17 +35,12 @@ class StockAdmin():
             print("Error al estirar cabeceras de tabla:", e)
 
     def agregar_a_lista_temporal(self):
-        busqueda = self.ventana.txtProducto.text().strip()
+        nombre_producto = self.ventana.txtProducto.text().strip()
         cantidad_txt = self.ventana.txtCantidad.text().strip()
         precio_txt = self.ventana.txtPrecio.text().strip()
 
-        if not busqueda or not cantidad_txt or not precio_txt:
+        if not nombre_producto or not cantidad_txt or not precio_txt:
             QMessageBox.warning(self.ventana, "Campos Vacíos", "Por favor, completa Producto, Cantidad y Precio.")
-            return
-
-        producto = self.producto_service.buscar_por_id_o_codigo(busqueda)
-        if not producto:
-            QMessageBox.critical(self.ventana, "No Encontrado", f"El producto '{busqueda}' no existe en la base de datos.")
             return
 
         try:
@@ -57,14 +52,13 @@ class StockAdmin():
             QMessageBox.warning(self.ventana, "Datos Inválidos", "Cantidad y Precio deben ser números mayores a cero.")
             return
 
-        fecha_hora = QDateTime.currentDateTime().toString("dd/MM/yyyy HH:mm:ss")
+        fecha_hora_actual = QDateTime.currentDateTime().toString("dd/MM/yyyy HH:mm:ss")
 
         item_lote = {
-            "id": producto.id,
-            "nombre": producto.nombre,
+            "nombre": nombre_producto,
             "cantidad": cantidad,
             "precio": precio,
-            "fecha_hora": fecha_hora
+            "fecha_hora": fecha_hora_actual
         }
         self.productos_en_lote.append(item_lote)
 
@@ -85,11 +79,12 @@ class StockAdmin():
 
     def cancelar_lote(self):
         if not self.productos_en_lote:
+            QMessageBox.information(self.ventana, "Información", "La tabla ya está vacía.")
             return
         
         pregunta = QMessageBox.question(
-            self.ventana, "Cancelar Carga", 
-            "¿Estás seguro de que deseas vaciar la lista actual? No se guardará nada.",
+            self.ventana, "Cancelar Carga",
+            "¿Estás seguro de que deseas vaciar la lista? Se borrarán todos los productos cargados en la tabla.",
             QMessageBox.Yes | QMessageBox.No
         )
         if pregunta == QMessageBox.Yes:
@@ -103,36 +98,23 @@ class StockAdmin():
 
         pregunta = QMessageBox.question(
             self.ventana, "Confirmar Carga", 
-            f"¿Deseas procesar e impactar los {len(self.productos_en_lote)} items en el inventario de la Base de Datos?",
+            f"¿Deseas guardar estos {len(self.productos_en_lote)} productos definitivamente en la Base de Datos?",
             QMessageBox.Yes | QMessageBox.No
         )
         
         if pregunta == QMessageBox.Yes:
-            errores = 0
-            for item in self.productos_en_lote:
-                prod_db = self.producto_service.buscar_por_id_o_codigo(str(item["id"]))
-                if prod_db:
-                    nuevo_stock = prod_db.stock_actual + item["cantidad"]
-                    exito_stock = self.producto_service.actualizar_stock(item["id"], nuevo_stock)
-                    exito_precio = self.producto_service.actualizar_precio(item["id"], item["precio"])
-                    
-                    if not exito_stock or not exito_precio:
-                        errores += 1
-                else:
-                    errores += 1
-
-            if errores == 0:
-                QMessageBox.information(self.ventana, "Éxito total", "¡Toda la mercadería se cargó y actualizó correctamente en la Base de Datos!")
-                self.productos_en_lote.clear()
-                self.actualizar_tabla_visual()
-            else:
-                QMessageBox.warning(self.ventana, "Carga con advertencias", f"Se procesó el lote, pero hubo problemas con {errores} registros.")
+            print("Aquí se llamará al método de ProductoData para insertar los productos en lote")
+            # Próximo paso: Meter el bucle para guardar en SQLite
+            
+            QMessageBox.information(self.ventana, "Éxito", "¡Productos listados para simulación con éxito!")
+            self.productos_en_lote.clear()
+            self.actualizar_tabla_visual()
 
     def volver(self):
         if self.productos_en_lote:
             pregunta = QMessageBox.question(
                 self.ventana, "Salir", 
-                "Hay elementos sin guardar en la lista. ¿Deseas salir de todas formas perdiendo los cambios?",
+                "Hay elementos en la tabla que no has subido. ¿Deseas salir de todas formas perdiendo los cambios?",
                 QMessageBox.Yes | QMessageBox.No
             )
             if pregunta == QMessageBox.No:
