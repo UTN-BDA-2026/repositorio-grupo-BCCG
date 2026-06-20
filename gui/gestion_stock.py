@@ -103,13 +103,35 @@ class StockAdmin():
         )
         
         if pregunta == QMessageBox.Yes:
-            print("Aquí se llamará al método de ProductoData para insertar los productos en lote")
-            # Próximo paso: Meter el bucle para guardar en SQLite
+            from model.producto import Producto
+            errores = 0
             
-            QMessageBox.information(self.ventana, "Éxito", "¡Productos listados para simulación con éxito!")
-            self.productos_en_lote.clear()
-            self.actualizar_tabla_visual()
+            for item in self.productos_en_lote:
+                try:
+                    codigo_autogenerado = item["nombre"][:3].upper() + str(int(QDateTime.currentMSecsSinceEpoch()) % 1000)
+                    id_categoria_defecto = 1 
+                    
+                    nuevo_producto = Producto(
+                        id=None,
+                        codigo=codigo_autogenerado,
+                        nombre=item["nombre"],
+                        id_categoria=id_categoria_defecto,
+                        precio=item["precio"],
+                        stock_actual=item["cantidad"]
+                    )
+                    
+                    self.producto_data.insertar(nuevo_producto)
+                except Exception as e:
+                    print(f"Error al insertar el producto {item['nombre']}: {e}")
+                    errores += 1
 
+            if errores == 0:
+                QMessageBox.information(self.ventana, "Éxito", "¡Todos los productos se guardaron correctamente en la Base de Datos!")
+                self.productos_en_lote.clear()
+                self.actualizar_tabla_visual()
+            else:
+                QMessageBox.warning(self.ventana, "Carga incompleta", f"Se procesó el lote, pero hubo problemas con {errores} registros.")
+                
     def volver(self):
         if self.productos_en_lote:
             pregunta = QMessageBox.question(
