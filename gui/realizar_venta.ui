@@ -337,7 +337,7 @@ QPushButton:pressed {
     <rect>
      <x>20</x>
      <y>330</y>
-     <width>381</width>
+     <width>401</width>
      <height>121</height>
     </rect>
    </property>
@@ -352,6 +352,11 @@ QPushButton:pressed {
    <column>
     <property name="text">
      <string>Producto</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Precio Unitario</string>
     </property>
    </column>
    <column>
