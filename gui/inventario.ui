@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>644</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog#Dialog {
+    background-color: #FFFFFF; /* Blanco puro, impecable y brillante */
+}
+
+
+
+QLabel#label {
+    color: #2C3E50;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+/* Estilo para las etiquetas de texto (Nombre, Usuario, etc.) */
+QLabel {
+    color: #4A5568;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Campos de Texto e Inputs */
+QLineEdit, QComboBox {
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 13px;
+    color: #334155;
+}
+
+QLineEdit:focus, QComboBox:focus {
+    border: 2px solid #FF9100; /* Resalta en naranja al hacer clic */
+}
+
+/* La Tabla de Usuarios */
+QTableWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    gridline-color: #F1F5F9;
+    font-size: 13px;
+}
+
+QHeaderView::section {
+    background-color: #334155; /* Cabecera oscura para contraste pro */
+    color: #FFFFFF;
+    padding: 6px;
+    font-weight: bold;
+    border: none;
+}
+
+/* --- ESTILOS DE LOS BOTONES --- */
+
+/* Botón Crear (Naranja Corporativo) */
+QPushButton#btn_registrar {
+    background-color: #FF9100;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_registrar:hover {
+    background-color: #FB8C00;
+}
+
+/* Botón Eliminar (Gris/Rojo sutil de advertencia) */
+QPushButton#btn_eliminar {
+    background-color: #FEE2E2; /* Fondo rojo muy clarito */
+    color: #EF4444; /* Texto rojo */
+    border: 1px solid #FCA5A5;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_eliminar:hover {
+    background-color: #EF4444;
+    color: #FFFFFF;
+}
+
+/* Botón Volver (Estilo elegante y neutro) */
+QPushButton#btn_volver {
+    background-color: #64748B; /* Gris slate */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+QPushButton#btn_volver:hover {
+    background-color: #475569;
+}</string>
+  </property>
+  <widget class="QLineEdit" name="txtBuscar">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>90</y>
+     <width>250</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>30</y>
+     <width>251</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>SISTEMA DE INVENTARIO</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>90</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Buscar producto:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnVolver">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>450</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #6C757D;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #5A6268;
+}
+
+QPushButton:hover {
+    background-color: #5A6268;
+}
+
+QPushButton:pressed {
+    background-color: #4E555B;
+}</string>
+   </property>
+   <property name="text">
+    <string>Volvel al Panel</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnActualizar">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>450</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #FF9100;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #D47900;
+}
+
+QPushButton:hover {
+    background-color: #E68200;
+}
+
+QPushButton:pressed {
+    background-color: #CC7400;
+}l
+</string>
+   </property>
+   <property name="text">
+    <string>Actualizar</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tablaInventario">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>170</y>
+     <width>581</width>
+     <height>251</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTableWidget {
+    color: black;
+    background-color: white;
+    gridline-color: gray;
+}
+
+QHeaderView::section {
+    background-color: #34495e;
+    color: white;
+    font-weight: bold;
+}
+</string>
+   </property>
+   <column>
+    <property name="text">
+     <string>ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Producto</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Cantidad</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Precio</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Fecha ingreso</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>140</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>LISTA DE PRODUCTOS:</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
