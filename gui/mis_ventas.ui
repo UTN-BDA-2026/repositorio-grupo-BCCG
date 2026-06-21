@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>471</height>
+    <height>585</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,7 +20,7 @@
    <string>Form</string>
   </property>
   <property name="layoutDirection">
-   <enum>Qt::LeftToRight</enum>
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#FormMisVentas{
@@ -122,7 +122,7 @@ QPushButton#btn_volver:hover {
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>10</y>
+     <y>20</y>
      <width>306</width>
      <height>38</height>
     </rect>
@@ -135,9 +135,9 @@ QPushButton#btn_volver:hover {
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>50</y>
-     <width>551</width>
-     <height>341</height>
+     <y>70</y>
+     <width>541</width>
+     <height>231</height>
     </rect>
    </property>
    <column>
@@ -160,7 +160,7 @@ QPushButton#btn_volver:hover {
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>430</y>
+     <y>530</y>
      <width>161</width>
      <height>31</height>
     </rect>
@@ -173,6 +173,49 @@ QPushButton#btn_volver:hover {
    </property>
    <property name="text">
     <string>Volver al Panel</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tablaDetalleVenta">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>340</y>
+     <width>401</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Producto</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Cantidad</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Precio Unitario</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Subtotal</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>310</y>
+     <width>171</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>
