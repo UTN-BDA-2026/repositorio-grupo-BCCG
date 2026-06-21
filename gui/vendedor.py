@@ -47,7 +47,7 @@ class Vendedor():
     def abrir_realizar_venta(self):
         from gui.realizar_venta import RealizarVenta
         self.ventana.hide()
-        self.pestana_ventas = RealizarVenta(volver_callback=self.mostrar_vendedor)
+        self.pestana_ventas = RealizarVenta(id_usuario = self.usuario.id,volver_callback=self.mostrar_vendedor)
         
         print("Realizar venta")
 
