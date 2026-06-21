@@ -121,39 +121,24 @@ class RealizarVenta():
         if len(self.carrito) == 0:
             QMessageBox.warning(self.ventana, "Error", "No hay productos cargados en la venta")
             return
-
-        from data.venta_data import VentaData
-        venta_data = VentaData(self.db_conexion)
         
-        try:
-            total_venta = sum(item["precio"] * item["cantidad"] for item in self.carrito)
-            id_usuario_actual = getattr(self, "usuario", None) or 1
-            if hasattr(self, "usuario") and self.usuario:
-                id_usuario_actual = self.usuario.id
-            id_venta = venta_data.crear_venta(id_usuario_actual, total_venta)
-            for item in self.carrito:
-                venta_data.agregar_detalle_venta(id_venta, item["id"], item["cantidad"], item["precio"])
-                #descontar stock
-                producto_db = self.producto_data.obtener_por_id(item["id"])
-                nuevo_stock = producto_db.stock_actual - item["cantidad"]
-                self.producto_data.actualizar_stock(item["id"], nuevo_stock)
-            #guardar datos en sqlite
-            self.db_conexion.con.commit()
+        for item in self.carrito:
+            producto_db = self.producto_data.obtener_por_id(item["id"])
+            nuevo_stock = producto_db.stock_actual - item["cantidad"]
             
-            QMessageBox.information(self.ventana, "Éxito", "Venta realizada y stock actualizado")
+            self.producto_data.actualizar_stock(item["id"], nuevo_stock)
+            #guardar datos en sqlite
+        self.db_conexion.con.commit()
+            
+        QMessageBox.information(self.ventana, "Éxito", "Venta realizada y stock actualizado")
             
             #limpiar carrito y tabla
-            self.carrito.clear()
-            self.ventana.tablaDetalle.setRowCount(0)
-            self.actualizarTotalGeneral()
-            self.limpiarCamposProducto()
-            self.ventana.txtIdProducto.clear()
-            self.ventana.txtIdProducto.setFocus()
-        
-        except Exception as ex:
-            self.db_conexion.con.rollback()
-            QMessageBox.critical(self.ventana, "Error", f"Ocurrió un error al finalizar la venta: {ex}")
-    
+        self.carrito.clear()
+        self.ventana.tablaDetalle.setRowCount(0)
+        self.actualizarTotalGeneral()    
+        self.limpiarCamposProducto()
+        self.ventana.txtIdProducto.clear()
+        self.ventana.txtIdProducto.setFocus()
 
     def limpiarCamposProducto(self):
         self.producto_seleccionado = None
