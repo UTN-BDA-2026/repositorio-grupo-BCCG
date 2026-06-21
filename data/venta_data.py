@@ -16,4 +16,13 @@ class VentaData():
             INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario)
             VALUES (?, ?, ?, ?)
         """, (id_venta, id_producto, cantidad, precio))
-       
+    
+    def obtener_ventas_por_usuario(self, id_usuario):
+        self.db.cur.execute("""
+            SELECT id, fecha, total
+            FROM ventas
+            WHERE id_usuario = ?
+            ORDER BY fecha DESC
+            """ , (id_usuario,))
+        return self.db.cur.fetchall() #devuelve una lista de tuplas con las ventas
+    
