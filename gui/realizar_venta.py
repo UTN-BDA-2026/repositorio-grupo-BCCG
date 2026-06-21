@@ -2,9 +2,10 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QMessageBox, QTableWidgetItem, QWidget
 from data.producto_data import ProductoData
 from bases_de_datos.sqlite_db import Conexion
+from data.venta_data import VentaData
 
 class RealizarVenta():
-    def __init__(self ,volver_callback =None):
+    def __init__(self ,id_usuario, volver_callback =None):
         loader = QUiLoader()
         self.ventana = loader.load("gui/realizar_venta.ui")
         self.db_conexion = Conexion()
@@ -15,6 +16,9 @@ class RealizarVenta():
         self.ventana.show()
         self.volver_callback = volver_callback
     
+        self.venta_data = VentaData(self.db_conexion)
+        self.id_usuario = id_usuario
+
     #conexion de botones
     def initGUI(self): 
         self.ventana.btnBuscar.clicked.connect(self.buscarProducto)
@@ -121,24 +125,41 @@ class RealizarVenta():
         if len(self.carrito) == 0:
             QMessageBox.warning(self.ventana, "Error", "No hay productos cargados en la venta")
             return
+        try:
+           #calculo del total de la venta
+           total = sum(item["subtotal"] for item in self.carrito) 
+
+            #crear cabecera de la venta
+           id_venta= self.venta_data.crear_venta(self.id_usuario, total)
         
-        for item in self.carrito:
-            producto_db = self.producto_data.obtener_por_id(item["id"])
-            nuevo_stock = producto_db.stock_actual - item["cantidad"]
-            
-            self.producto_data.actualizar_stock(item["id"], nuevo_stock)
+           for item in self.carrito:
+                producto_db = self.producto_data.obtener_por_id(item["id"])
+
+                self.venta_data.agregar_detalle(
+                    id_venta,
+                    item["id"],
+                    item["cantidad"],
+                    producto_db.precio
+                )
+        
+                nuevo_stock = producto_db.stock_actual - item["cantidad"]
+                self.producto_data.actualizar_stock(item["id"], nuevo_stock)
             #guardar datos en sqlite
-        self.db_conexion.con.commit()
+           self.db_conexion.con.commit()
             
-        QMessageBox.information(self.ventana, "Éxito", "Venta realizada y stock actualizado")
+           QMessageBox.information(self.ventana, "Éxito", "Venta realizada y stock actualizado")
             
             #limpiar carrito y tabla
-        self.carrito.clear()
-        self.ventana.tablaDetalle.setRowCount(0)
-        self.actualizarTotalGeneral()    
-        self.limpiarCamposProducto()
-        self.ventana.txtIdProducto.clear()
-        self.ventana.txtIdProducto.setFocus()
+           self.carrito.clear()
+           self.ventana.tablaDetalle.setRowCount(0)
+           self.actualizarTotalGeneral()    
+           self.limpiarCamposProducto()
+           self.ventana.txtIdProducto.clear()
+           self.ventana.txtIdProducto.setFocus()
+       
+        except Exception as ex:
+            self.db_conexion.con.rollback()
+            QMessageBox.critical(self.ventana, "Error", str(ex))
 
     def limpiarCamposProducto(self):
         self.producto_seleccionado = None
