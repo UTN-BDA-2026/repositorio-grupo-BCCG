@@ -72,11 +72,11 @@ class RealizarVenta():
         if producto_repetido:  
             #producto ya existia 
             producto_repetido["cantidad"] = cantidad_total
-            producto_repetido["subtotal"] = cantidad_total * self.producto_seleccionado.precio
+            producto_repetido["subtotal"] = cantidad_total * item["precio"]
 
             # Actualizamos visualmente la fila que ya existía en la tabla (columnas 2 y 3)
-            self.ventana.tablaDetalle.setItem(indice_fila, 2, QTableWidgetItem(str(producto_repetido["cantidad"])))
-            self.ventana.tablaDetalle.setItem(indice_fila, 3, QTableWidgetItem(f"${producto_repetido["subtotal"]:.2f}"))
+            self.ventana.tablaDetalle.setItem(indice_fila, 3, QTableWidgetItem(str(producto_repetido["cantidad"])))
+            self.ventana.tablaDetalle.setItem(indice_fila, 4, QTableWidgetItem(f"${producto_repetido["subtotal"]:.2f}"))
         
         else: 
             #producto nuevo
@@ -85,6 +85,7 @@ class RealizarVenta():
             item = { 
                 "id": self.producto_seleccionado.id,
                 "nombre": self.producto_seleccionado.nombre,
+                "precio": self.producto_seleccionado.precio,
                 "cantidad": cantidad_nueva,
                 "subtotal": subtotal
             }
@@ -96,8 +97,9 @@ class RealizarVenta():
 
             self.ventana.tablaDetalle.setItem(fila, 0, QTableWidgetItem(str(item["id"])))
             self.ventana.tablaDetalle.setItem(fila, 1, QTableWidgetItem(str(item["nombre"])))
-            self.ventana.tablaDetalle.setItem(fila, 2, QTableWidgetItem(str(item["cantidad"])))
-            self.ventana.tablaDetalle.setItem(fila, 3, QTableWidgetItem(f"${item["subtotal"]:.2f}"))
+            self.ventana.tablaDetalle.setItem(fila, 2, QTableWidgetItem(f"${item['precio']:.2f}"))
+            self.ventana.tablaDetalle.setItem(fila, 3, QTableWidgetItem(str(item["cantidad"])))
+            self.ventana.tablaDetalle.setItem(fila, 4, QTableWidgetItem(f"${item["subtotal"]:.2f}"))
 
         #actualizacion del TOTAL GENERAL y limpieza del buscador de arriba
         self.actualizarTotalGeneral()
@@ -139,7 +141,7 @@ class RealizarVenta():
                     id_venta,
                     item["id"],
                     item["cantidad"],
-                    producto_db.precio
+                    item["precio"]
                 )
         
                 nuevo_stock = producto_db.stock_actual - item["cantidad"]
