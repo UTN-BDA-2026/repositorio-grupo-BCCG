@@ -73,13 +73,25 @@ class Admin():
         )
 
     def abrir_productos(self):
-        print("Abrir gestión de productos")
-
+        print("Abrir control de inventario")
+        from gui.inventario import InventarioAdmin
+        
+        # Creamos la instancia del controlador
+        self.controlador_inventario = InventarioAdmin(
+            self.usuario, 
+            volver_callback=self.mostrar_admin, 
+            db=None
+        )
+        
+        # Ocultamos el admin y mostramos la ventana real del inventario
+        self.ventana.hide()
+        self.controlador_inventario.ventana.show()
+        
     def abrir_stock(self):
         print("Abrir carga de stock")
         from gui.gestion_stock import StockAdmin 
         
-        #conexión de base de datos asociada al usuario o sistema
+        #conexion de base de datos asociada al usuario o sistema
         base_datos = getattr(self.usuario, 'db', None)
         
         self.ventana_stock = StockAdmin(self.usuario, volver_callback=self.mostrar_admin, db=base_datos)
