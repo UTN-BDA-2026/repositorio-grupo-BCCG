@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>473</width>
-    <height>500</height>
+    <height>445</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -114,8 +114,8 @@ QPushButton#btn_volver:hover {
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>30</y>
+      <x>100</x>
+      <y>40</y>
       <width>271</width>
       <height>41</height>
      </rect>
@@ -123,6 +123,7 @@ QPushButton#btn_volver:hover {
     <property name="font">
      <font>
       <pointsize>-1</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -139,7 +140,7 @@ QPushButton#btn_volver:hover {
    <widget class="QPushButton" name="btnUsuarios">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>160</x>
       <y>110</y>
       <width>150</width>
       <height>30</height>
@@ -148,6 +149,7 @@ QPushButton#btn_volver:hover {
     <property name="font">
      <font>
       <pointsize>-1</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -176,8 +178,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="btnMenuInventario">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>200</y>
+      <x>160</x>
+      <y>180</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -207,8 +209,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="btnReporte">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>290</y>
+      <x>160</x>
+      <y>250</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -238,8 +240,8 @@ QPushButton:pressed {
    <widget class="QPushButton" name="btnVolver">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>380</y>
+      <x>160</x>
+      <y>320</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -273,7 +275,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>473</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

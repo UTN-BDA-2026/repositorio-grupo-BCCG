@@ -14,9 +14,10 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialog#Dialog {
-    background-color: #FFFFFF; /* Blanco puro, impecable y brillante */
+   <string notr="true">QWidget#centralwidget {
+    background-color: #FFFFFF;
 }
+
 
 
 
@@ -115,13 +116,14 @@ QPushButton#btn_volver:hover {
      <rect>
       <x>130</x>
       <y>20</y>
-      <width>251</width>
+      <width>271</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <pointsize>-1</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -129,7 +131,7 @@ QPushButton#btn_volver:hover {
      <string notr="true">color: #333333;</string>
     </property>
     <property name="text">
-     <string>Productos mas Vendidos</string>
+     <string>PRODUCTOS MAS VENDIDOS</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnVolver">
@@ -160,7 +162,7 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>Volver</string>
+     <string>Volver al panel</string>
     </property>
    </widget>
    <widget class="QTableWidget" name="tablaRanking">
@@ -214,7 +216,7 @@ QTableCornerButton::section {
      <x>0</x>
      <y>0</y>
      <width>534</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -14,30 +14,23 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialog#Dialog {
-   background-color: #FFFFFF;
+   <string notr="true">QWidget#centralwidget {
+    background-color: #FFFFFF;
 }
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>40</y>
-      <width>241</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>MENU INVENTARIO </string>
-    </property>
-   </widget>
+   <property name="styleSheet">
+    <string notr="true">QWidget#Widget {
+    background-color: #FFFFFF; 
+}
+</string>
+   </property>
    <widget class="QPushButton" name="btnStock">
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>150</y>
+      <y>160</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -99,7 +92,7 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>220</y>
+      <y>230</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -156,8 +149,8 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>290</y>
-      <width>221</width>
+      <y>300</y>
+      <width>211</width>
       <height>30</height>
      </rect>
     </property>
@@ -178,6 +171,26 @@ QPushButton:hover {
      <string>Historial de Movimientos</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>40</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>MENÚ INVENTARIO</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -185,7 +198,7 @@ QPushButton:hover {
      <x>0</x>
      <y>0</y>
      <width>445</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
