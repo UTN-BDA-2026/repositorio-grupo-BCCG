@@ -4,6 +4,7 @@ from data.producto_data import ProductoData
 from bases_de_datos.sqlite_db import Conexion
 from data.venta_data import VentaData
 from services.inventario_service import InventarioService
+from services.factura_service import FacturaService
 
 class RealizarVenta():
     def __init__(self ,id_usuario, volver_callback =None):
@@ -21,6 +22,8 @@ class RealizarVenta():
         self.id_usuario = id_usuario
 
         self.inventario_service = InventarioService()
+        self.factura_service = FacturaService()
+
     #conexion de botones
     def initGUI(self): 
         self.ventana.btnBuscar.clicked.connect(self.buscarProducto)
@@ -129,10 +132,11 @@ class RealizarVenta():
         if len(self.carrito) == 0:
             QMessageBox.warning(self.ventana, "Error", "No hay productos cargados en la venta")
             return
+        
         pregunta = QMessageBox.question(self.ventana, "Confirmar", "¿Desea confirmar la venta de los productos cargados en el carrito?",
             QMessageBox.Yes | QMessageBox.No
         )
-        
+
         if pregunta == QMessageBox.No:
             return
         try:
@@ -164,8 +168,13 @@ class RealizarVenta():
            
             #guardar datos en sqlite
            self.db_conexion.con.commit()
-            
-           QMessageBox.information(self.ventana, "Éxito", "Venta realizada y stock actualizado")
+           texto_del_ticket = self.factura_service.generar_ticket_txt(id_venta,list(self.carrito), total)
+           msg = QMessageBox(self.ventana)
+           msg.setIcon(QMessageBox.Icon.Information) # Icono de información explícito
+           msg.setWindowTitle("Venta Confirmada")
+           msg.setText(texto_del_ticket) # Acá le seteamos el texto limpio
+           msg.setStyleSheet("QLabel{ font-family: 'Courier New'; font-size: 12px; }")
+           msg.exec()
             
             #limpiar carrito y tabla
            self.carrito.clear()
@@ -189,6 +198,5 @@ class RealizarVenta():
     def volver(self):
         self.ventana.close()
         if self.volver_callback:
-            self.volver_callback()
-
+            self.volver_callback() 
 
