@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QMessageBox, QTableWidgetItem, QWidget
 from data.producto_data import ProductoData
 from bases_de_datos.sqlite_db import Conexion
 from data.venta_data import VentaData
+from services.inventario_service import InventarioService
 
 class RealizarVenta():
     def __init__(self ,id_usuario, volver_callback =None):
@@ -19,6 +20,7 @@ class RealizarVenta():
         self.venta_data = VentaData(self.db_conexion)
         self.id_usuario = id_usuario
 
+        self.inventario_service = InventarioService()
     #conexion de botones
     def initGUI(self): 
         self.ventana.btnBuscar.clicked.connect(self.buscarProducto)
@@ -146,6 +148,14 @@ class RealizarVenta():
         
                 nuevo_stock = producto_db.stock_actual - item["cantidad"]
                 self.producto_data.actualizar_stock(item["id"], nuevo_stock)
+                
+                self.inventario_service.mongo.registrar_movimiento({
+                    "id_producto": item["id"],
+                    "tipo": "SALIDA",
+                    "cantidad": item["cantidad"],
+                    "motivo": "Venta"
+                })
+           
             #guardar datos en sqlite
            self.db_conexion.con.commit()
             
