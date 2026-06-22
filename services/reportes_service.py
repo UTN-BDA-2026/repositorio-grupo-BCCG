@@ -39,18 +39,13 @@ class ReportesService():
             return []
 
     #productos mas vendidos
-    def productos_mas_vendidos(self):
+    def obtener_productos_mas_vendidos(self):
         try:
             self.db.cur.execute("""
-                SELECT productos.nombre,
-                       SUM(detalle_venta.cantidad) as total_vendido
-                FROM detalle_venta
-
-                JOIN productos
-                ON detalle_venta.id_producto = productos.id
-
+                SELECT productos.nombre,SUM(detalle_venta.cantidad) as total_vendido
+                FROM detalle_venta 
+                JOIN productos  ON detalle_venta.id_producto = productos.id
                 GROUP BY productos.id
-
                 ORDER BY total_vendido DESC
             """)
 
