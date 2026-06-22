@@ -1,5 +1,5 @@
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QMessageBox, QTableWidgetItem, QWidget
+from PySide6.QtWidgets import QMessageBox, QTableWidgetItem, QWidget, QInputDialog 
 from data.producto_data import ProductoData
 from bases_de_datos.sqlite_db import Conexion
 from data.venta_data import VentaData
@@ -26,26 +26,67 @@ class RealizarVenta():
 
     #conexion de botones
     def initGUI(self): 
-        self.ventana.btnBuscar.clicked.connect(self.buscarProducto)
+        self.ventana.btnBuscar.clicked.connect(self.buscar_producto)
         self.ventana.btnAgregar.clicked.connect(self.agregarAlCarrito)
         self.ventana.btnBorrar.clicked.connect(self.eliminarDelCarrito)
         self.ventana.btnFin.clicked.connect(self.finalizarVenta)
         self.ventana.spnCantidad.setMinimum(1) 
         self.ventana.btn_volver.clicked.connect(self.volver)
 
-    def buscarProducto(self): 
-        id_prod = self.ventana.txtIdProducto.text()
+    def buscar_producto(self):
+        entrada = self.ventana.txtIdProducto.text().strip()
+        
+        if not entrada:
+            QMessageBox.warning(self.ventana, "Atención", "Por favor, ingrese un ID o el nombre del producto.")
+            return
 
-        producto = self.producto_data.obtener_por_id(id_prod)
-
-        if producto:
-            self.producto_seleccionado = producto
-            self.ventana.lblNombre.setText(str(producto.nombre))
-            self.ventana.lblPrecio.setText(f"${producto.precio:.2f}")
-            self.ventana.lblStock.setText(str(producto.stock_actual))
+        if entrada.isdigit():
+            id_producto = int(entrada)
+            producto = self.producto_data.obtener_por_id(id_producto)
+            if producto:
+                self.mostrar_producto_en_labels(producto)
+            else:
+                QMessageBox.information(self.ventana, "No encontrado", f"No se encontró ningún producto con el ID #{id_producto}")
+        
         else:
-            QMessageBox.warning(self.ventana, "Error", "El producto no existe")
-            self.limpiarCamposProducto()
+            try:
+                todos = self.producto_data.obtener_todos()
+                coincidencias = [p for p in todos if entrada.lower() in p.nombre.lower()]
+                
+                if not coincidencias:
+                    QMessageBox.information(self.ventana, "No encontrado", f"No hay productos de maquillaje que coincidan con '{entrada}'")
+                    return
+                
+                #si encontró un solo producto con ese nombre, lo carga directo
+                if len(coincidencias) == 1:
+                    self.mostrar_producto_en_labels(coincidencias[0])
+                
+                else:
+                    items = [f"#{p.id} - {p.nombre} (${p.precio:.2f})" for p in coincidencias]
+                    seleccion, ok = QInputDialog.getItem(
+                        self.ventana, 
+                        "Seleccionar Producto", 
+                        f"Se encontraron {len(coincidencias)} productos.\nSeleccione el correcto:", 
+                        items, 0, False
+                    )
+                    
+                    if ok and seleccion:
+                        #extraemos el ID del elemento seleccionado
+                        id_seleccionado = int(seleccion.split(" ")[0].replace("#", ""))
+                        producto_elegido = self.producto_data.obtener_por_id(id_seleccionado)
+                        self.mostrar_producto_en_labels(producto_elegido)
+                        
+            except Exception as e:
+                QMessageBox.critical(self.ventana, "Error", f"Error en la búsqueda por nombre: {e}")
+
+    def mostrar_producto_en_labels(self, producto):
+        """Asigna los datos del producto de maquillaje a tus QLabels de la interfaz"""
+        self.ventana.lblNombre.setText(producto.nombre)
+        self.ventana.lblPrecio.setText(f"$ {producto.precio:.2f}")
+        self.ventana.lblStock.setText(str(producto.stock_actual))
+        
+        #se usa el mismo nombre que en agregarAlCarrito
+        self.producto_seleccionado = producto
     
     def agregarAlCarrito(self):
         if not self.producto_seleccionado:
@@ -79,7 +120,7 @@ class RealizarVenta():
             producto_repetido["cantidad"] = cantidad_total
             producto_repetido["subtotal"] = cantidad_total * item["precio"]
 
-            # Actualizamos visualmente la fila que ya existía en la tabla (columnas 2 y 3)
+            #actualizamos visualmente la fila que ya existía en la tabla (columnas 3 y 4)
             self.ventana.tablaDetalle.setItem(indice_fila, 3, QTableWidgetItem(str(producto_repetido["cantidad"])))
             self.ventana.tablaDetalle.setItem(indice_fila, 4, QTableWidgetItem(f"${producto_repetido["subtotal"]:.2f}"))
         
@@ -198,5 +239,4 @@ class RealizarVenta():
     def volver(self):
         self.ventana.close()
         if self.volver_callback:
-            self.volver_callback() 
-
+            self.volver_callback()
