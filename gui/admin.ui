@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>473</width>
     <height>500</height>
    </rect>
   </property>
@@ -114,7 +114,7 @@ QPushButton#btn_volver:hover {
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>90</x>
       <y>30</y>
       <width>271</width>
       <height>41</height>
@@ -123,7 +123,6 @@ QPushButton#btn_volver:hover {
     <property name="font">
      <font>
       <pointsize>-1</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -140,8 +139,8 @@ QPushButton#btn_volver:hover {
    <widget class="QPushButton" name="btnUsuarios">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>100</y>
+      <x>150</x>
+      <y>110</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -149,7 +148,6 @@ QPushButton#btn_volver:hover {
     <property name="font">
      <font>
       <pointsize>-1</pointsize>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -175,11 +173,11 @@ QPushButton:pressed {
      <string>Usuarios</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnProductos">
+   <widget class="QPushButton" name="btnMenuInventario">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>170</y>
+      <x>150</x>
+      <y>200</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -203,14 +201,14 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>Inventario</string>
+     <string>Modulo Inventario</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnStock">
+   <widget class="QPushButton" name="btnReporte">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>240</y>
+      <x>150</x>
+      <y>290</y>
       <width>150</width>
       <height>30</height>
      </rect>
@@ -234,44 +232,13 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>Stock</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnVentas">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>310</y>
-      <width>150</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: #FF9100;
-    color: white;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 14px;
-    border: 1px solid #D47900;
-}
-
-QPushButton:hover {
-    background-color: #E68200;
-}
-
-QPushButton:pressed {
-    background-color: #CC7400;
-}</string>
-    </property>
-    <property name="text">
-     <string>Ventas</string>
+     <string>Reporte</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnVolver">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>150</x>
       <y>380</y>
       <width>150</width>
       <height>30</height>
@@ -296,7 +263,7 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>Volver</string>
+     <string>Salir</string>
     </property>
    </widget>
   </widget>
@@ -305,8 +272,8 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
-     <height>21</height>
+     <width>473</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

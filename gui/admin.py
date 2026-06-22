@@ -2,6 +2,7 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from gui.ventas_admin import Ventas
 from gui.usuarios_admin import Usuarios
+from gui.menu_inventario import MenuInventario
 
 import os
 
@@ -31,15 +32,11 @@ class Admin():
         except:
             pass
         try:
-            self.ventana.btnProductos.clicked.connect(self.abrir_productos)
+            self.ventana.btnMenuInventario.clicked.connect(self.abrir_menu_inventario)
         except:
             pass
         try:
-            self.ventana.btnStock.clicked.connect(self.abrir_stock)
-        except:
-            pass
-        try:
-            self.ventana.btnVentas.clicked.connect(self.abrir_ventas_admin)
+            self.ventana.btnReporte.clicked.connect(self.abrir_ventas_admin)
         except:
             pass
         try:
@@ -72,27 +69,18 @@ class Admin():
             volver_callback = self.mostrar_admin
         )
 
-    def abrir_productos(self):
-        print("Abrir control de inventario")
-        from gui.inventario import InventarioAdmin
+    def abrir_menu_inventario(self):
+        print("Abrir menu intermedio de inventario")
+        self.ventana.hide()
         
         # Creamos la instancia del controlador
-        self.controlador_inventario = InventarioAdmin(
-            self.usuario, 
+        self.menu_inventario = MenuInventario(
+            usuario=self.usuario, 
             volver_callback=self.mostrar_admin, 
             db=None
         )
         
         # Ocultamos el admin y mostramos la ventana real del inventario
         self.ventana.hide()
-        self.controlador_inventario.ventana.show()
+        self.menu_inventario.ventana.show()
         
-    def abrir_stock(self):
-        print("Abrir carga de stock")
-        from gui.gestion_stock import StockAdmin 
-        
-        #conexion de base de datos asociada al usuario o sistema
-        base_datos = getattr(self.usuario, 'db', None)
-        
-        self.ventana_stock = StockAdmin(self.usuario, volver_callback=self.mostrar_admin, db=base_datos)
-        self.ventana.hide()
