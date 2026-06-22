@@ -1,7 +1,7 @@
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
-from gui.bajo_stock import StockBajo
 from gui.mejor_vendedor import MejorVendedor
+from gui.producto_mas_vendido import ProductoMasVendido
 from services.reportes_service import ReportesService #importamos el servicio de reportes
 import os
 
@@ -43,14 +43,12 @@ class Ventas():
             self.ventana.btnVolver.clicked.connect(
                 self.volver
                 )
-           
         except:
             pass
 
-        try:
-            self.ventana.btnStockBajo.clicked.connect(
-                self.abrir_stock_bajo
-            )
+        try: 
+            self.ventana.btnProdMasVendido.clicked.connect(
+                self.abrir_productos_mas_vendidos)     
         except:
             pass
 
@@ -66,22 +64,11 @@ class Ventas():
         self.ventana.lblTotalVendido.setText(f"${total:.2f}")
     
     def volver(self):
-
         self.ventana.hide()
         if self.volver_callback:
             self.volver_callback()
 
-    def abrir_stock_bajo(self):
-
-        self.stock = StockBajo(
-            self.usuario,
-            volver_callback=self.mostrar_ventas
-        )
-
-        self.ventana.close()
-
     def abrir_mejor_vendedor(self):
-
         self.mejor = MejorVendedor(
             self.usuario,
             volver_callback=self.mostrar_ventas
@@ -89,6 +76,14 @@ class Ventas():
 
         self.ventana.close()
 
-    def mostrar_ventas(self):
+    def abrir_productos_mas_vendidos(self):
+        self.ventana.hide()
+        self.productos_mas_vendidos = ProductoMasVendido(
+            self.usuario,
+            volver_callback=self.mostrar_ventas
+        )
 
+        self.ventana.close()
+
+    def mostrar_ventas(self):
         self.ventana.show()
