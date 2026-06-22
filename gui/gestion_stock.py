@@ -1,6 +1,7 @@
 import os
+from datetime import datetime
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import QFile, QDateTime
+from PySide6.QtCore import QFile, QDateTime, Qt # <-- AGREGADO 'Qt' para los flags y roles
 from PySide6.QtWidgets import QTableWidgetItem, QMessageBox, QHeaderView
 from data.producto_data import ProductoData
 from services.inventario_service import InventarioService
@@ -31,9 +32,14 @@ class StockAdmin():
         self.ventana.btnCancelar.clicked.connect(self.cancelar_lote)
         self.ventana.btnConfirmar.clicked.connect(self.confirmar_y_subir_db)
         self.ventana.btnVolver.clicked.connect(self.volver)
-
+        self.ventana.btnQuitar.clicked.connect(self.quitar_producto_seleccionado)
+        self.ventana.btnBuscar.clicked.connect(self.buscar_producto_existente)
+        self.ventana.btnCancelar_2.clicked.connect(self.limpiar_tabla_busqueda)
+        self.ventana.tablaBusqueda.cellChanged.connect(self.actualizar_fecha_hora_edicion)
+        
         try:
             self.ventana.tablaStock.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            self.ventana.tablaBusqueda.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         except Exception as e:
             print("Error al estirar cabeceras de tabla:", e)
 
@@ -95,21 +101,25 @@ class StockAdmin():
             self.actualizar_tabla_visual()
 
     def confirmar_y_subir_db(self):
-        if not self.productos_en_lote:
-            QMessageBox.warning(self.ventana, "Lista Vacía", "No hay ningún producto en el listado para procesar.")
+        filas_busqueda = self.ventana.tablaBusqueda.rowCount()
+        
+        if not self.productos_en_lote and filas_busqueda == 0:
+            QMessageBox.warning(self.ventana, "Tablas Vacías", "No hay elementos cargados en el lote ni modificaciones de stock en la búsqueda.")
             return
 
         pregunta = QMessageBox.question(
-            self.ventana, "Confirmar Carga", 
-            f"¿Deseas guardar estos {len(self.productos_en_lote)} productos definitivamente en la Base de Datos?",
+            self.ventana, "Confirmar Cambios", 
+            "¿Deseas procesar todas las operaciones (Carga masiva y modificaciones) definitivamente?",
             QMessageBox.Yes | QMessageBox.No
         )
         
-        if pregunta == QMessageBox.Yes:
+        if pregunta == QMessageBox.No:
+            return
+
+        errores_lote = 0
+        if self.productos_en_lote:
             from model.producto import Producto
-            errores = 0
-            
-            id_categoria_valido= None
+            id_categoria_valido = None
             try:
                 cursor = self.producto_data.db.con.cursor()
                 cursor.execute("SELECT id FROM categorias LIMIT 1")
@@ -127,8 +137,6 @@ class StockAdmin():
             for item in self.productos_en_lote:
                 try:
                     codigo_autogenerado = item["nombre"][:3].upper() + str(int(QDateTime.currentMSecsSinceEpoch()) % 1000)
-                    id_categoria_defecto = 1 
-                    
                     nuevo_producto = Producto(
                         id=None,
                         codigo=codigo_autogenerado,
@@ -140,7 +148,7 @@ class StockAdmin():
                     
                     self.producto_data.insertar(nuevo_producto)
 
-                    #Registro de ingreso de mercaderia como una ENTRADA Mongo Historial 
+                    # Registro de ingreso de mercadería en Mongo Historial
                     self.inventario_service.mongo.registrar_movimiento({
                         "id_producto": nuevo_producto.id,
                         "tipo": "ENTRADA",
@@ -149,15 +157,123 @@ class StockAdmin():
                     })
                 except Exception as e:
                     print(f"Error al insertar el producto {item['nombre']}: {e}")
-                    errores += 1
+                    errores_lote += 1
 
-            if errores == 0:
-                QMessageBox.information(self.ventana, "Éxito", "¡Todos los productos se guardaron correctamente en la Base de Datos!")
+        hubo_cambios_tabla2 = False
+        try:
+            for fila in range(filas_busqueda):
+                fecha_txt = self.ventana.tablaBusqueda.item(fila, 3).text()
+                
+                # Si se modificó la cantidad, tendrá la hora estampada en vez de '--'
+                if fecha_txt != "--":
+                    hubo_cambios_tabla2 = True
+                    id_producto = self.ventana.tablaBusqueda.item(fila, 0).data(Qt.UserRole)
+                    nueva_cantidad = int(self.ventana.tablaBusqueda.item(fila, 1).text())
+                    
+                    prod_antiguo = self.producto_data.obtener_por_id(id_producto)
+                    stock_anterior = prod_antiguo.stock_actual
+                    
+                    self.producto_data.actualizar_stock(id_producto, nueva_cantidad)
+                    
+                    diferencia = nueva_cantidad - stock_anterior
+                    if diferencia != 0:
+                        tipo_mov = "ENTRADA" if diferencia > 0 else "SALIDA"
+                        self.inventario_service.mongo.registrar_movimiento({
+                            "id_producto": id_producto,
+                            "tipo": tipo_mov,
+                            "cantidad": abs(diferencia),
+                            "motivo": f"Ajuste masivo interactivo (Stock de {stock_anterior} -> {nueva_cantidad})"
+                        })
+
+            # Guardamos de forma definitiva en SQLite usando la conexión real de la app
+            self.producto_data.db.con.commit()
+            
+            # Avisos finales según lo procesado
+            if errores_lote == 0:
+                QMessageBox.information(self.ventana, "Éxito", "¡Todo el inventario y stock han sido actualizados de forma exitosa!")
                 self.productos_en_lote.clear()
                 self.actualizar_tabla_visual()
+                self.limpiar_tabla_busqueda()
             else:
-                QMessageBox.warning(self.ventana, "Carga incompleta", f"Se procesó el lote, pero hubo problemas con {errores} registros.")
+                QMessageBox.warning(self.ventana, "Carga incompleta", f"Se procesaron los datos, pero hubo problemas con {errores_lote} registros del lote.")
+
+        except Exception as e:
+            self.producto_data.db.con.rollback()
+            QMessageBox.critical(self.ventana, "Error", f"No se pudo completar la carga: {e}")
                 
+    def quitar_producto_seleccionado(self):
+        fila_seleccionada = self.ventana.tablaStock.currentRow()
+        
+        if fila_seleccionada == -1:
+            QMessageBox.warning(self.ventana, "Atención", "Por favor, selecciona primero un producto de la tabla para quitarlo.")
+            return
+            
+        nombre_prod = self.productos_en_lote[fila_seleccionada]["nombre"]
+        pregunta = QMessageBox.question(
+            self.ventana, "Quitar Producto",
+            f"¿Seguro de que deseas quitar '{nombre_prod}' de la lista?",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        
+        if pregunta == QMessageBox.Yes:
+            self.productos_en_lote.pop(fila_seleccionada)
+            self.actualizar_tabla_visual()
+            
+    def buscar_producto_existente(self):
+        nombre_buscar = self.ventana.txtProducto_2.text().strip().lower()
+        if not nombre_buscar:
+            QMessageBox.warning(self.ventana, "Atención", "Por favor, ingresa un nombre para buscar.")
+            return
+
+        try:
+            todos = self.producto_data.obtener_todos()
+            coincidencias = [p for p in todos if nombre_buscar in p.nombre.lower()]
+            
+            self.ventana.tablaBusqueda.cellChanged.disconnect()
+            self.ventana.tablaBusqueda.setRowCount(0)
+            
+            if not coincidencias:
+                QMessageBox.information(self.ventana, "No encontrado", f"No se encontraron productos con el nombre '{nombre_buscar}'.")
+                self.ventana.tablaBusqueda.cellChanged.connect(self.actualizar_fecha_hora_edicion)
+                return
+
+            for producto in coincidencias:
+                fila = self.ventana.tablaBusqueda.rowCount()
+                self.ventana.tablaBusqueda.insertRow(fila)
+                
+                item_nombre = QTableWidgetItem(producto.nombre)
+                item_nombre.setFlags(item_nombre.flags() ^ Qt.ItemIsEditable) 
+                
+                item_cantidad = QTableWidgetItem(str(producto.stock_actual))
+                
+                item_precio = QTableWidgetItem(f"${producto.precio:.2f}")
+                item_precio.setFlags(item_precio.flags() ^ Qt.ItemIsEditable)
+                item_fecha = QTableWidgetItem("--")
+                item_fecha.setFlags(item_fecha.flags() ^ Qt.ItemIsEditable)
+                
+                item_nombre.setData(Qt.UserRole, producto.id)
+                
+                self.ventana.tablaBusqueda.setItem(fila, 0, item_nombre)
+                self.ventana.tablaBusqueda.setItem(fila, 1, item_cantidad)
+                self.ventana.tablaBusqueda.setItem(fila, 2, item_precio)
+                self.ventana.tablaBusqueda.setItem(fila, 3, item_fecha)
+           
+            self.ventana.tablaBusqueda.cellChanged.connect(self.actualizar_fecha_hora_edicion)
+            
+        except Exception as e:
+            QMessageBox.critical(self.ventana, "Error", f"Error al buscar: {e}")
+
+    def actualizar_fecha_hora_edicion(self, fila, columna):
+        if columna == 1:
+            ahora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.ventana.tablaBusqueda.cellChanged.disconnect()
+            self.ventana.tablaBusqueda.setItem(fila, 3, QTableWidgetItem(ahora))
+            self.ventana.tablaBusqueda.cellChanged.connect(self.actualizar_fecha_hora_edicion)
+
+    def limpiar_tabla_busqueda(self):
+        self.ventana.txtProducto_2.clear()
+        self.ventana.tablaBusqueda.setRowCount(0)
+    
     def volver(self):
         if self.productos_en_lote:
             pregunta = QMessageBox.question(
