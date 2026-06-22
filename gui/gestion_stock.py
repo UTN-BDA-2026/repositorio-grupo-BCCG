@@ -3,6 +3,7 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, QDateTime
 from PySide6.QtWidgets import QTableWidgetItem, QMessageBox, QHeaderView
 from data.producto_data import ProductoData
+from services.inventario_service import InventarioService
 
 class StockAdmin():
 
@@ -19,6 +20,8 @@ class StockAdmin():
         self.producto_data = ProductoData(db) 
         
         self.productos_en_lote = []
+
+        self.inventario_service = InventarioService()
 
         self.initGUI()
         self.ventana.show()
@@ -106,6 +109,21 @@ class StockAdmin():
             from model.producto import Producto
             errores = 0
             
+            id_categoria_valido= None
+            try:
+                cursor = self.producto_data.db.con.cursor()
+                cursor.execute("SELECT id FROM categorias LIMIT 1")
+                resultado = cursor.fetchone()
+
+                if resultado:
+                    id_categoria_valido = resultado[0]
+                else:
+                    cursor.execute("INSERT INTO categorias (nombre) VALUES (?)", ('General',))
+                    id_categoria_valido = cursor.lastrowid
+            except Exception as e:
+                print("Error al verificar categorias en SQLite, usando ID 1 por defecto:", e)
+                id_categoria_valido = 1
+
             for item in self.productos_en_lote:
                 try:
                     codigo_autogenerado = item["nombre"][:3].upper() + str(int(QDateTime.currentMSecsSinceEpoch()) % 1000)
@@ -115,12 +133,20 @@ class StockAdmin():
                         id=None,
                         codigo=codigo_autogenerado,
                         nombre=item["nombre"],
-                        id_categoria=id_categoria_defecto,
+                        id_categoria=id_categoria_valido,
                         precio=item["precio"],
                         stock_actual=item["cantidad"]
                     )
                     
                     self.producto_data.insertar(nuevo_producto)
+
+                    #Registro de ingreso de mercaderia como una ENTRADA Mongo Historial 
+                    self.inventario_service.mongo.registrar_movimiento({
+                        "id_producto": nuevo_producto.id,
+                        "tipo": "ENTRADA",
+                        "cantidad": nuevo_producto.stock_actual,
+                        "motivo": "Carga Inicial"
+                    })
                 except Exception as e:
                     print(f"Error al insertar el producto {item['nombre']}: {e}")
                     errores += 1
