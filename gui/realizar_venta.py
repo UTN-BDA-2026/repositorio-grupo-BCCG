@@ -129,6 +129,12 @@ class RealizarVenta():
         if len(self.carrito) == 0:
             QMessageBox.warning(self.ventana, "Error", "No hay productos cargados en la venta")
             return
+        pregunta = QMessageBox.question(self.ventana, "Confirmar", "¿Desea confirmar la venta de los productos cargados en el carrito?",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        
+        if pregunta == QMessageBox.No:
+            return
         try:
            #calculo del total de la venta
            total = sum(item["subtotal"] for item in self.carrito) 
