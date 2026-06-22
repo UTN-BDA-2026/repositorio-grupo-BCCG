@@ -5,6 +5,7 @@ from bases_de_datos.sqlite_db import Conexion
 from gui.gestion_stock import StockAdmin
 from gui.inventario import InventarioAdmin
 from gui.bajo_stock import StockBajo
+from gui.movimientos_stock import MovimientosStock
 
 class MenuInventario():
     def __init__(self, usuario, volver_callback=None, db=None):
@@ -25,6 +26,7 @@ class MenuInventario():
         self.ventana.btnProductos.clicked.connect(self.abrir_inventario_general)
         self.ventana.btnStock.clicked.connect(self.abrir_gestion_stock)
         self.ventana.btnStockBajo.clicked.connect(self.abrir_stock_bajo)
+        self.ventana.btnHistorial.clicked.connect(self.abrir_movimientos_stock)
         self.ventana.btnVolver.clicked.connect(self.volver)
 
     def abrir_inventario_general(self):
@@ -42,6 +44,11 @@ class MenuInventario():
         self.ventana.hide()
         self.bajo_stock = StockBajo(self.usuario,volver_callback=self.mostrar_menu_inventario)
 
+
+    def abrir_movimientos_stock(self):
+        print("Abrir movimientos de stock")
+        self.ventana.hide()
+        self.movimientos = MovimientosStock(self.usuario, volver_callback=self.mostrar_menu_inventario)
 
     def mostrar_menu_inventario(self):
         self.ventana.show()
