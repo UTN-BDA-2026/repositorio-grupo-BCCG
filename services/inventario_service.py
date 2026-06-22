@@ -87,3 +87,6 @@ class InventarioService():
             self.db.con.rollback()
 
             print("Error al agregar stock:", ex)
+
+    def obtener_historial_movimientos(self): 
+        return self.mongo.obtener_movimientos()
