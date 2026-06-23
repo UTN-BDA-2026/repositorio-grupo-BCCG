@@ -33,7 +33,6 @@ border-color: rgb(255, 170, 0);
     <font>
      <family>Segoe UI</family>
      <pointsize>10</pointsize>
-     <fontweight>Medium</fontweight>
     </font>
    </property>
    <property name="styleSheet">
@@ -61,7 +60,6 @@ border-color: rgb(255, 170, 0);
     <font>
      <family>Segoe UI</family>
      <pointsize>10</pointsize>
-     <fontweight>Medium</fontweight>
     </font>
    </property>
    <property name="styleSheet">
@@ -271,8 +269,6 @@ QLineEdit:focus {
    </property>
   </widget>
  </widget>
- <resources>
- 
- </resources>
+ <resources/>
  <connections/>
 </ui>
