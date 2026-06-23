@@ -1,14 +1,15 @@
-Sistema de Inventario de Tienda (Inventario)
+Sistema de Gestión de Stock e Inventario 
 
-DESCRIPCION DEL PROYECTO
+DESCRIPCION DEL PROYECTO:
 Este proyecto consiste en el desarrollo de un Sistema de Inventario de Tienda, cuyo objetivo es gestionar productos, categorias y ventas de manera eficiente.
 
 El sistema utiliza un modelo hibrido de bases de datos, combinando una base de datos relacional para la gestion estructurada de los datos y una base de datos no relacional para almacenar los registros historicos del sistema, los dos tipos de bases de datos que usaremos son:
  - SQLite3 para almacenar los datos estructurados del inventario
  - MongoDB para almacenar el historial de movimientos 
 La base relacional permite mantener la integridad de los datos y las relaciones entre entidades, mientras que la base no relacional ofrece flexibilidad para almacenar informacion del movimiento del sistema
+Nos enfocamos en venta simple - tabla de productos - gestion de usuarios.
 
-OBJETIVOS DEL PROYECTO
+OBJETIVOS DEL PROYECTO:
 - Gestionar productos y categorias de una tienda
 - Registrar ventas realizadas
 - Controlar el stock disponible
@@ -16,13 +17,14 @@ OBJETIVOS DEL PROYECTO
 - Aplicar indaxacion para mejorar el rendimiento de consultas
 - Realizar respaldo(backup) y restauracion (restore) de la base de datos
 
-TECNOLOGIAS UTILIZADAS
-- Python 
-- SQLite3
-- MongoDB
-- pymongo
+TECNOLOGIAS UTILIZADAS:
+- Lenguaje: Python 
+- Interfaz gráfica: PySide6 (Qt para Python)
+- Base de Datos estructurada: SQLite3
+- Base de Datos No Relacional: MongoDB
+- Conector NoSQL: pymongo
 
-ARQUITECTURA DEL SISTEMA 
+ARQUITECTURA DEL SISTEMA:
 El sistema se divide en dos componentes principales: 
 Relacional (SQLite3)
  - productos
@@ -34,7 +36,7 @@ No Relacional (MongoDB)
  - logs_sistema
 Cada vez que se realiza una operación importante (como una venta o modificación de stock), el sistema registra el cambio tanto en la base relacional como en la base no relacional.
 
-MODELO DE DATOS RELACIONAL
+MODELO DE DATOS RELACIONAL:
 Tabla: categorias
  - id
  - nombre
@@ -55,41 +57,13 @@ Tabla: detalle_venta
  - cantidad
  - precio
 
-RELACIONES 
+RELACIONES:
 - una categoria puede tener muchos productos
 - una venta puede tener muchos productos
 - un producto puede aparecer en muchas ventas
 
-Integrantes: 
-* Batista Martina
-* Cabeza Florencia
-* Carbajal Agustin
-* Guajardo Luana
+ROLES DEL SISTEMA: El sistema cuenta con un control de acceso basado en dos perfiles diferenciados:
 
-
-Descargar DB Browser for SQLite para poder visualizar la base de datos relacional o en extensiones buscar SQLlite Editor
-Descargar MongoBD Compass 
-pip install pymongo en terminal
-
-
-instalar PySide6 (es parecido a PyQt6 solo que para versiones nuevas de Python)
-terminal: pip install PySide6
-- para abrir el diseñador desde la terminal 
-pyside6-designer
-
-para ingresar al login
-te ubicas en el archivo app.py 
-en la terminal pones python app.py
-
-en el login poner estos datos 
-usuario: admin
-contraseña: admin123
-
-cree carpeta data y models
-models: representa la estructura de los datos(la entidad)
-data: es la capa que habla con la base de datos
-
-Acciones que puede hacer segun el rol:
 1. Administrador (Dueño/Gerente)
 Tiene el control total. Su objetivo es gestionar el negocio y ver si es rentable 
 - Gestion de usuarios: Puede crear nuevos usuarios (ej: dar de alta a un vendedor nuevo) o despedirlos (borrarlos)
@@ -105,29 +79,66 @@ No puede tocar la configuracion del sistema
 - Perfil Propio: Puede ver sus propias ventas del dia, pero no las de sus compañeros
 
 En resumen: 
-VENDEDOR:
--Busca productos
--Registrar una venta
--Ver stock actual
 
-ADMINISTRADOR:
--Busca productos
--Registrar una venta
--Ver stock actual
--Cambiar precios
+1. ADMINISTRADOR:
+- Busca productos
+- Registrar una venta
+- Ver stock actual
+- Cambiar precios
 - Borrar productos 
 - Ver ganacias totales
 - Crear otros usuarios
 
+2. VENDEDOR:
+- Busca productos
+- Registrar una venta
+- Ver stock actual
 
-nos enfocamos en venta simple - tabla de productos - gestion de usuarios
+ARQUITECTURA DEL SISTEMA Y CARPETAS:
+El proyecto está estructurado de forma modular y organizada en capas independientes para separar la interfaz gráfica de la lógica de datos:
 
-1.  activar archivo .env 
+- bases_de_datos: Contiene los archivos físicos de almacenamiento del sistema, como el archivo local de SQLite3 (.db) y scripts iniciales de base de datos.
+
+- model: Capa de Entidades: representa la estructura de los datos del sistema, define Objeto, Producto, Categoría o Venta dentro del código Python.
+
+- data: Capa de Persistencia (Acceso a Datos): contiene los archivos que interactuan directamente con las bases de datos. Se ejecutan las consultas SQL (SQLite3) y las inserciones de documentos de auditoría (MongoDB).
+
+- gui: Capa de Interfaz Gráfica: guarda los archivos visuales generados por pyside6-designer (archivos .ui), los estilos de diseño generales de las pantallas y y la lógica que controla las ventanas de PySide6.
+
+- services: Capa de Lógica de Negocio: es el puente entre las ventanas (gui) y la base de datos (data). Aquí se procesan las reglas del sistema.
+
+- tickets: almacena de forma organizada los archivos de texto, PDFs o comprobantes generados automáticamente por el sistema al concretar una venta.
+
+- venv: carpeta del entorno virtual de python, contiene las librerías aisladas del proyecto.
+
+GUÍA DE INSTALACIÓN Y PASO A PASO: 
+Sigan estos pasos detallados para clonar, configurar y ejecutar el proyecto en su entorno local de desarrollo:
+
+Requisitos previos:
+1. DB Browser for SQLite (o la extensión SQLite Editor en VS Code) para visualizar la base de datos relacional.
+2. MongoDB para interactuar de forma visual con los registros de stock.
+
+Comandos para ejecutar nuestro sistema:
+
+- Ejecutar el siguiente bloque de comandos en su terminal de forma secuencial:
+
+ 1. Clonar el repositorio e ingresar a la carpeta del proyecto
+git clone <url-del-repositorio>
+cd Inventario
+
+2. Crear el entorno virtual 
+python -m venv .venv
+
+3. Activar el entorno virtual en Windows (PowerShell)
 .venv\Scripts\Activate.ps1
 
-2. instalar librerias 
+4. Instalar todas las librerías necesarias (PySide6, pymongo, etc.)
 pip install -r requirements.txt
 
+5. Ejecutar la aplicación e iniciar el sistema
+python app.py
 
-
-
+Integrantes: 
+* Batista Martina
+* Cabeza Florencia
+* Guajardo Luana
