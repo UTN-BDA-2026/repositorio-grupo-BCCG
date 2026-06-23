@@ -20,7 +20,7 @@
    <string>Form</string>
   </property>
   <property name="layoutDirection">
-   <enum>Qt::LayoutDirection::LeftToRight</enum>
+   <enum>Qt::LeftToRight</enum>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#FormMisVentas{
@@ -140,6 +140,21 @@ QPushButton#btn_volver:hover {
      <height>231</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QTableWidget {
+    color: black;
+    background-color: white;
+    gridline-color: #E2E8F0;
+}
+
+QHeaderView::section {
+    background-color: #3B2A4A;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 4px;
+}</string>
+   </property>
    <column>
     <property name="text">
      <string>ID Venta</string>
@@ -159,7 +174,7 @@ QPushButton#btn_volver:hover {
   <widget class="QPushButton" name="btn_volver">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>210</x>
      <y>530</y>
      <width>161</width>
      <height>31</height>
@@ -183,6 +198,21 @@ QPushButton#btn_volver:hover {
      <width>401</width>
      <height>151</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTableWidget {
+    color: black;
+    background-color: white;
+    gridline-color: #E2E8F0;
+}
+
+QHeaderView::section {
+    background-color: #3B2A4A;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 4px;
+}</string>
    </property>
    <column>
     <property name="text">
@@ -213,6 +243,21 @@ QPushButton#btn_volver:hover {
      <width>171</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTableWidget {
+    color: black;
+    background-color: white;
+    gridline-color: #E2E8F0;
+}
+
+QHeaderView::section {
+    background-color: #3B2A4A;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 4px;
+}</string>
    </property>
    <property name="text">
     <string/>

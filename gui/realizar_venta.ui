@@ -43,8 +43,9 @@ QLineEdit, QComboBox {
     color: #334155;
 }
 
+
 QLineEdit:focus, QComboBox:focus {
-    border: 2px 
+    border: 2px solid #D1A19A; 
 }
 
 /* La Tabla de Usuarios */
@@ -132,24 +133,21 @@ QPushButton#btn_volver:hover {
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
-    background-color: #ff914c; /* El naranja exacto de tu botón &quot;Crear Usuario&quot; */
+    background-color: #D1A19A;
     color: white;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 13px;
+    border-radius: 10px;
     font-weight: bold;
-    border: none;
-    border-radius: 6px; /* Para que quede bien redondeado como el otro */
-    padding: 6px 15px;
+    font-size: 14px;
+    border: 1px solid #B88680;
 }
 
 QPushButton:hover {
-    background-color: #e67e3a; /* Se oscurece un poquito cuando pasás el mouse */
+    background-color: #C29089;
 }
 
 QPushButton:pressed {
-    background-color: #cc6d30; /* Se oscurece más cuando lo apretás */
-}
-</string>
+    background-color: #B3817A; 
+}</string>
    </property>
    <property name="text">
     <string>Buscar</string>
@@ -275,7 +273,7 @@ QPushButton:pressed {
   <widget class="QPushButton" name="btnAgregar">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>170</x>
      <y>250</y>
      <width>81</width>
      <height>31</height>
@@ -283,24 +281,21 @@ QPushButton:pressed {
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
-    background-color: #ff914c; /* El naranja exacto de tu botón &quot;Crear Usuario&quot; */
+    background-color: #D1A19A;
     color: white;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 13px;
+    border-radius: 10px;
     font-weight: bold;
-    border: none;
-    border-radius: 6px; /* Para que quede bien redondeado como el otro */
-    padding: 6px 15px;
+    font-size: 14px;
+    border: 1px solid #B88680;
 }
 
 QPushButton:hover {
-    background-color: #e67e3a; /* Se oscurece un poquito cuando pasás el mouse */
+    background-color: #C29089;
 }
 
 QPushButton:pressed {
-    background-color: #cc6d30; /* Se oscurece más cuando lo apretás */
-}
-</string>
+    background-color: #B3817A; 
+}</string>
    </property>
    <property name="text">
     <string>Agregar</string>
@@ -340,6 +335,21 @@ QPushButton:pressed {
      <width>401</width>
      <height>121</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QTableWidget {
+    color: black;
+    background-color: white;
+    gridline-color: #E2E8F0;
+}
+
+QHeaderView::section {
+    background-color: #3B2A4A;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 4px;
+}</string>
    </property>
    <property name="showGrid">
     <bool>true</bool>
@@ -385,7 +395,7 @@ font-weight: bold;
 </string>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;TOTAL GENERAL: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:696; color:#57025d;&quot;&gt;TOTAL GENERAL: &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblTotal">
@@ -419,17 +429,20 @@ font-weight: bold;
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
-    background-color: #e63946; /* Rojo de alerta */
+    background-color: #9C7EB8;
     color: white;
+    border-radius: 10px;
     font-weight: bold;
-    border-radius: 5px;
-    padding: 4px 10px;
+    font-size: 14px;
+    border: 1px solid #8567A0;
 }
+
 QPushButton:hover {
-    background-color: #d62828;
+    background-color: #8869A1;
 }
+
 QPushButton:pressed {
-    background-color: #b30000;
+    background-color: #72568B; 
 }</string>
    </property>
    <property name="text">
@@ -447,22 +460,20 @@ QPushButton:pressed {
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
-    background-color: #ff914c; /* El naranja exacto de tu botón &quot;Crear Usuario&quot; */
+    background-color: #D1A19A;
     color: white;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 13px;
+    border-radius: 10px;
     font-weight: bold;
-    border: none;
-    border-radius: 6px; /* Para que quede bien redondeado como el otro */
-    padding: 6px 15px;
+    font-size: 14px;
+    border: 1px solid #B88680;
 }
 
 QPushButton:hover {
-    background-color: #e67e3a; /* Se oscurece un poquito cuando pasás el mouse */
+    background-color: #C29089;
 }
 
 QPushButton:pressed {
-    background-color: #cc6d30; /* Se oscurece más cuando lo apretás */
+    background-color: #B3817A; 
 }</string>
    </property>
    <property name="text">

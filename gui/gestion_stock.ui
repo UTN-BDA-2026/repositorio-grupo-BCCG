@@ -44,12 +44,11 @@ QLineEdit, QComboBox {
     color: #334155;
 }
 
-/* NUEVO: Al hacer foco para escribir, resalta en tu rosa maquillaje en vez de naranja */
+
 QLineEdit:focus, QComboBox:focus {
     border: 2px solid #D1A19A; 
 }
 
-/* La Tabla de la Ventana */
 QTableWidget {
     background-color: #FFFFFF;
     border: 1px solid #CBD5E1;
@@ -62,7 +61,7 @@ QTableWidget {
     selection-color: white;
 }
 
-/* NUEVO: Cabecera violeta oscuro/berenjena para la marca de cosméticos */
+
 QHeaderView::section {
     background-color: #3B2A4A; 
     color: #FFFFFF;
@@ -71,9 +70,7 @@ QHeaderView::section {
     border: none;
 }
 
-/* --- ESTILOS DE LOS BOTONES --- */
 
-/* Botón Registrar/Crear (Rosa Maquillaje con sus efectos táctiles) */
 QPushButton#btn_registrar {
     background-color: #D1A19A;
     color: #FFFFFF;

@@ -103,26 +103,17 @@ QPushButton#btn_volver:hover {
     </property>
     <property name="styleSheet">
      <string notr="true">QTableWidget {
+    color: black;
     background-color: white;
-    border: 1px solid #CFCFCF;
-    gridline-color: #DADADA;
-    font-size: 13px;
-    color: #333333;
-    selection-background-color: #D6E4F0;
+    gridline-color: #E2E8F0;
 }
 
 QHeaderView::section {
-    background-color: #2F5D8C;
+    background-color: #3B2A4A;
     color: white;
     font-weight: bold;
     font-size: 13px;
-    border-right: 1px solid white;
-    height: 30px;
-}
-
-QTableCornerButton::section {
-    background-color: #2F5D8C;
-    border: none;
+    padding: 4px;
 }</string>
     </property>
     <column>
@@ -149,7 +140,7 @@ QTableCornerButton::section {
    <widget class="QPushButton" name="btnVolver">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>190</x>
       <y>340</y>
       <width>150</width>
       <height>25</height>
@@ -174,7 +165,7 @@ QPushButton:pressed {
 }</string>
     </property>
     <property name="text">
-     <string>Volver</string>
+     <string>Volver al Panel</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">

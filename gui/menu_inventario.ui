@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>445</width>
-    <height>499</height>
+    <height>469</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,20 +37,20 @@
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: #FF9100;
+    background-color: #D1A19A;
     color: white;
     border-radius: 10px;
     font-weight: bold;
     font-size: 14px;
-    border: 1px solid #D47900;
+    border: 1px solid #B88680;
 }
 
 QPushButton:hover {
-    background-color: #E68200;
+    background-color: #C29089;
 }
 
 QPushButton:pressed {
-    background-color: #CC7400;
+    background-color: #B3817A; 
 }</string>
     </property>
     <property name="text">
@@ -68,20 +68,20 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: #FF9100;
+    background-color: #D1A19A;
     color: white;
     border-radius: 10px;
     font-weight: bold;
     font-size: 14px;
-    border: 1px solid #D47900;
+    border: 1px solid #B88680;
 }
 
 QPushButton:hover {
-    background-color: #E68200;
+    background-color: #C29089;
 }
 
 QPushButton:pressed {
-    background-color: #CC7400;
+    background-color: #B3817A; 
 }</string>
     </property>
     <property name="text">
@@ -99,15 +99,20 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: #FF9100;
+    background-color: #D1A19A;
     color: white;
     border-radius: 10px;
     font-weight: bold;
     font-size: 14px;
+    border: 1px solid #B88680;
 }
 
 QPushButton:hover {
-    background-color: #E68200;
+    background-color: #C29089;
+}
+
+QPushButton:pressed {
+    background-color: #B3817A; 
 }</string>
     </property>
     <property name="text">
@@ -156,15 +161,20 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: #FF9100;
+    background-color: #D1A19A;
     color: white;
     border-radius: 10px;
     font-weight: bold;
     font-size: 14px;
+    border: 1px solid #B88680;
 }
 
 QPushButton:hover {
-    background-color: #E68200;
+    background-color: #C29089;
+}
+
+QPushButton:pressed {
+    background-color: #B3817A; 
 }</string>
     </property>
     <property name="text">

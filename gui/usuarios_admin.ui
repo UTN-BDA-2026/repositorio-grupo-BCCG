@@ -34,7 +34,6 @@ QLabel {
     font-weight: bold;
 }
 
-/* Campos de Texto e Inputs */
 QLineEdit, QComboBox {
     background-color: #FFFFFF;
     border: 1px solid #CBD5E1;
@@ -44,8 +43,9 @@ QLineEdit, QComboBox {
     color: #334155;
 }
 
+
 QLineEdit:focus, QComboBox:focus {
-    border: 2px solid #FF9100; /* Resalta en naranja al hacer clic */
+    border: 2px solid #D1A19A; 
 }
 
 /* La Tabla de Usuarios */
@@ -247,6 +247,24 @@ QComboBox QAbstractItemView {
      <height>30</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #D1A19A;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #B88680;
+}
+
+QPushButton:hover {
+    background-color: #C29089;
+}
+
+QPushButton:pressed {
+    background-color: #B3817A; 
+}</string>
+   </property>
    <property name="text">
     <string>Crear Usuario</string>
    </property>
@@ -264,13 +282,15 @@ QComboBox QAbstractItemView {
     <string notr="true">QTableWidget {
     color: black;
     background-color: white;
-    gridline-color: gray;
+    gridline-color: #E2E8F0;
 }
 
 QHeaderView::section {
-    background-color: #34495e;
+    background-color: #3B2A4A;
     color: white;
     font-weight: bold;
+    font-size: 13px;
+    padding: 4px;
 }</string>
    </property>
    <column>
@@ -302,6 +322,24 @@ QHeaderView::section {
      <width>150</width>
      <height>30</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #9C7EB8;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #8567A0;
+}
+
+QPushButton:hover {
+    background-color: #8869A1;
+}
+
+QPushButton:pressed {
+    background-color: #72568B; 
+}</string>
    </property>
    <property name="text">
     <string>Eliminar Usuario</string>
