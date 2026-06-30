@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>644</width>
+    <width>752</width>
     <height>500</height>
    </rect>
   </property>
@@ -206,7 +206,7 @@ QPushButton:pressed {
   <widget class="QPushButton" name="btnActualizar">
    <property name="geometry">
     <rect>
-     <x>460</x>
+     <x>570</x>
      <y>450</y>
      <width>150</width>
      <height>30</height>
@@ -239,7 +239,7 @@ QPushButton:pressed {
     <rect>
      <x>30</x>
      <y>170</y>
-     <width>581</width>
+     <width>691</width>
      <height>251</height>
     </rect>
    </property>
@@ -266,6 +266,11 @@ QHeaderView::section {
    <column>
     <property name="text">
      <string>Producto</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Categoría</string>
     </property>
    </column>
    <column>

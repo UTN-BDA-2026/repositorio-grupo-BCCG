@@ -2,7 +2,6 @@ import os
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile, Qt
 from PySide6.QtWidgets import QTableWidgetItem, QHeaderView, QMessageBox
-
 from services.inventario_service import InventarioService
 from data.producto_data import ProductoData
 from bases_de_datos.sqlite_db import Conexion
