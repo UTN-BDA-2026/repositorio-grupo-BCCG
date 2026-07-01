@@ -37,8 +37,14 @@ class InventarioAdmin(QDialog):
 
     def initGUI(self):
         self.ventana.btnActualizar.clicked.connect(self.cargar_productos)
+        self.ventana.btnEliminar.clicked.connect(self.eliminar_producto_inventario)
         self.ventana.btnVolver.clicked.connect(self.volver)
         self.ventana.txtBuscar.textChanged.connect(self.filtrar_productos)
+    
+        try:
+            self.ventana.btnEliminar.clicked.connect(self.eliminar_producto_inventario)
+        except Exception as e:
+            print("Aviso: No se pudo conectar btnEliminar (revisá el nombre en el .ui):", e)
 
         try:
             self.ventana.tablaInventario.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -65,7 +71,7 @@ class InventarioAdmin(QDialog):
         fecha_actual = QDateTime.currentDateTime().toString("dd/MM/yyyy HH:mm:ss")
         
         for fila, prod in enumerate(lista_productos):
-            #Buscamos el nombre del rubro según el ID asignado
+            # Buscamos el nombre del rubro según el ID asignado
             nombre_categoria = categorias_traductor.get(prod.id_categoria, "General")
 
             # Creamos rigurosamente los 6 items de forma independiente
@@ -75,6 +81,7 @@ class InventarioAdmin(QDialog):
             item_stock = QTableWidgetItem(str(prod.stock_actual))
             item_precio = QTableWidgetItem(f"$ {prod.precio:.2f}")
             item_fecha = QTableWidgetItem(fecha_actual)
+            item_nombre.setData(Qt.UserRole, prod.id)
 
             # Alineaciones estéticas
             item_id.setTextAlignment(Qt.AlignCenter)
@@ -89,7 +96,7 @@ class InventarioAdmin(QDialog):
 
             self.ventana.tablaInventario.setItem(fila, 0, item_id)
             self.ventana.tablaInventario.setItem(fila, 1, item_nombre)
-            self.ventana.tablaInventario.setItem(fila, 2, item_categoria) # Columna 2: Categoría limpia 🌟
+            self.ventana.tablaInventario.setItem(fila, 2, item_categoria) # Columna 2: Categoría limpia
             self.ventana.tablaInventario.setItem(fila, 3, item_stock)     # Columna 3: Cantidad / Stock
             self.ventana.tablaInventario.setItem(fila, 4, item_precio)    # Columna 4: Precio
             self.ventana.tablaInventario.setItem(fila, 5, item_fecha)     # Columna 5: Fecha ingreso
@@ -102,6 +109,44 @@ class InventarioAdmin(QDialog):
 
         filtrados = [p for p in self.productos if termino in p.nombre.lower()]
         self.mostrar_en_tabla(filtrados)
+
+    #Eliminar únicamente el producto seleccionado de la tablaInventario
+    def eliminar_producto_inventario(self):
+        fila_seleccionada = self.ventana.tablaInventario.currentRow()
+        
+        if fila_seleccionada == -1:
+            QMessageBox.warning(self.ventana, "Atención", "Por favor, selecciona primero un producto de la lista del inventario para eliminarlo.")
+            return
+            
+        item_nombre = self.ventana.tablaInventario.item(fila_seleccionada, 1)
+        id_producto = item_nombre.data(Qt.UserRole)
+        nombre_prod = item_nombre.text()
+        
+        pregunta = QMessageBox.question(
+            self.ventana, "Confirmar Eliminación",
+            f"¿Estás completamente seguro de eliminar definitivamente el producto '{nombre_prod}'?\n\nEsta acción borrará el registro de la base de datos.",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        
+        if pregunta == QMessageBox.No:
+            return
+            
+        try:
+            # Mandamos la baja directa a tu base de datos SQLite
+            self.producto_data.db.cur.execute("DELETE FROM productos WHERE id = ?", (id_producto,))
+            self.producto_data.db.con.commit()
+            
+            # Quitamos la fila visualmente de la grilla
+            self.ventana.tablaInventario.removeRow(fila_seleccionada)
+            
+            # Volvemos a actualizar la lista interna en memoria por si el usuario filtra después
+            self.productos = [p for p in self.productos if p.id != id_producto]
+            
+            QMessageBox.information(self.ventana, "Éxito", f"El producto '{nombre_prod}' fue eliminado correctamente.")
+            
+        except Exception as e:
+            self.producto_data.db.con.rollback()
+            QMessageBox.critical(self.ventana, "Error", f"No se pudo completar la eliminación: {e}")
 
     def volver(self):
         self.ventana.close()

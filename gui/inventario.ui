@@ -309,6 +309,37 @@ QHeaderView::section {
     <string>LISTA DE PRODUCTOS:</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnEliminar">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>450</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #D1A19A;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #B88680;
+}
+
+QPushButton:hover {
+    background-color: #C29089;
+}
+
+QPushButton:pressed {
+    background-color: #B3817A; 
+}</string>
+   </property>
+   <property name="text">
+    <string>Eliminar Producto</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
