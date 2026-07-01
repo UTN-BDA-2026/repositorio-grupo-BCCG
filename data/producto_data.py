@@ -40,11 +40,10 @@ class ProductoData():
         """, (id_producto,))
         self.db.con.commit()
     
-    #para actualizar precio
-    def actualizar_precio(self, id_producto, nuevo_precio):
+    #para actualizar datos de los productos
+    def actualizar_datos_producto(self, id_producto, nuevo_nombre, id_categoria, nuevo_precio):
         self.db.cur.execute("""
-            UPDATE productos
-            SET precio = ?
+            UPDATE productos 
+            SET nombre = ?, id_categoria = ?, precio = ? 
             WHERE id = ?
-        """, (nuevo_precio, id_producto))
-        self.db.con.commit()
+        """, (nuevo_nombre, id_categoria, nuevo_precio, id_producto))

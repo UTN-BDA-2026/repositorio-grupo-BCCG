@@ -37,8 +37,17 @@ class StockAdmin():
         self.ventana.btnBuscar.clicked.connect(self.buscar_producto_existente)
         self.ventana.btnCancelar_2.clicked.connect(self.limpiar_tabla_busqueda)
         self.ventana.tablaBusqueda.cellChanged.connect(self.actualizar_fecha_hora_edicion)
-        self.ventana.combo_categoria.clear()
         
+        try:
+            self.producto_data.db.cur.execute("INSERT OR IGNORE INTO categorias (id, nombre) VALUES (1, 'Maquillajes')")
+            self.producto_data.db.cur.execute("INSERT OR IGNORE INTO categorias (id, nombre) VALUES (2, 'Cosméticos')")
+            self.producto_data.db.cur.execute("INSERT OR IGNORE INTO categorias (id, nombre) VALUES (3, 'Accesorios')")
+            self.producto_data.db.cur.execute("INSERT OR IGNORE INTO categorias (id, nombre) VALUES (4, 'Perfumería')")
+            self.producto_data.db.con.commit() # Guardamos en la base de datos
+        except Exception as e:
+            print("Aviso: No se pudieron forzar las categorías en SQLite:", e)
+
+        self.ventana.combo_categoria.clear()
         self.ventana.combo_categoria.addItems([
             "1 - Maquillajes",
             "2 - Cosméticos",
@@ -70,14 +79,27 @@ class StockAdmin():
             QMessageBox.warning(self.ventana, "Datos Inválidos", "Cantidad y Precio deben ser números mayores a cero.")
             return
 
-        categoria_texto = self.ventana.combo_categoria.currentText() 
-        if " - " in categoria_texto:
-            categoria_texto = categoria_texto.split(" - ")[1]
+        texto_combo = self.ventana.combo_categoria.currentText().strip()
+        
+        categorias_db = {
+            "1 - Maquillajes": 1,
+            "2 - Cosméticos": 2,
+            "3 - Accesorios": 3,
+            "4 - Perfumería": 4
+        }
+        
+        id_cat = categorias_db.get(texto_combo, 1)
+        
+        if " - " in texto_combo:
+            categoria_texto = texto_combo.split(" - ")[1].strip()
+        else:
+            categoria_texto = texto_combo
 
         fecha_hora_actual = QDateTime.currentDateTime().toString("dd/MM/yyyy HH:mm:ss")
 
         item_lote = {
             "nombre": nombre_producto,
+            "id_categoria": id_cat,      
             "categoria": categoria_texto, 
             "cantidad": cantidad,
             "precio": precio,
@@ -135,49 +157,68 @@ class StockAdmin():
             return
 
         errores_lote = 0
-        if self.productos_en_lote:
         
-            try:
-                texto_seleccionado = self.ventana.combo_categoria.currentText()
-                id_categoria_valido = int(texto_seleccionado.split(" - ")[0])
-            except Exception as e:
-                print("Error al leer combo_categoria, usando ID 1 por defecto:", e)
-                id_categoria_valido = 1
-
+        if self.productos_en_lote:
             for item in self.productos_en_lote:
                 try:
                     codigo_autogenerado = item["nombre"][:3].upper() + str(int(QDateTime.currentMSecsSinceEpoch()) % 1000)
+                    
                     nuevo_producto = Producto(
-                        id=None,
+                        id=0,
                         codigo=codigo_autogenerado,
                         nombre=item["nombre"],
-                        id_categoria=id_categoria_valido,
+                        id_categoria=item["id_categoria"], 
                         precio=item["precio"],
                         stock_actual=item["cantidad"]
                     )
                     
                     self.producto_data.insertar(nuevo_producto)
 
+                    try:
+                        ultimo_id = self.producto_data.db.cur.lastrowid
+                    except Exception:
+                        ultimo_id = 1
+
                     self.inventario_service.mongo.registrar_movimiento({
-                        "id_producto": nuevo_producto.id,
+                        "id_producto": ultimo_id,
                         "tipo": "ENTRADA",
                         "cantidad": nuevo_producto.stock_actual,
                         "motivo": "Carga Inicial"
                     })
-                except Exception as e:
-                    print(f"Error al insertar el producto {item['nombre']}: {e}")
+                except Exception as error_real:
+                    QMessageBox.critical(
+                        self.ventana, 
+                        "ERROR DETECTADO EN EL LOTE", 
+                        f"Producto con problemas: {item['nombre']}\n\nEl error real es: {error_real}"
+                    )
                     errores_lote += 1
 
         try:
+            categorias_inverso = {
+                "Maquillajes": 1,
+                "Cosméticos": 2,
+                "Accesorios": 3,
+                "Perfumería": 4
+            }
+
             for fila in range(filas_busqueda):
-                fecha_txt = self.ventana.tablaBusqueda.item(fila, 4).text() 
-                
-                if fecha_txt != "--":
+                fecha_item = self.ventana.tablaBusqueda.item(fila, 4)
+                if fecha_item is not None and fecha_item.text() != "--":
                     id_producto = self.ventana.tablaBusqueda.item(fila, 0).data(Qt.UserRole)
+                    
+                    nombre_editado = self.ventana.tablaBusqueda.item(fila, 0).text().strip()
+                    categoria_editada_txt = self.ventana.tablaBusqueda.item(fila, 1).text().strip()
                     nueva_cantidad = int(self.ventana.tablaBusqueda.item(fila, 2).text())
+
+                    precio_editado_txt = self.ventana.tablaBusqueda.item(fila, 3).text().replace("$", "").strip()
+                    precio_editado = float(precio_editado_txt)
+
+                    id_categoria_editado = categorias_inverso.get(categoria_editada_txt, 1)
+                    
+                    self.producto_data.actualizar_datos_producto(id_producto, nombre_editado, id_categoria_editado, precio_editado)
                     
                     prod_antiguo = self.producto_data.obtener_por_id(id_producto)
-                    stock_anterior = prod_antiguo.stock_actual
+                    stock_anterior = prod_antiguo.stock_actual if prod_antiguo else nueva_cantidad
                     
                     self.producto_data.actualizar_stock(id_producto, nueva_cantidad)
                     
@@ -187,7 +228,6 @@ class StockAdmin():
                         self.inventario_service.mongo.registrar_movimiento({
                             "id_producto": id_producto,
                             "tipo": tipo_mov,
-                            "amount": abs(diferencia),
                             "motivo": f"Ajuste masivo interactivo (Stock de {stock_anterior} -> {nueva_cantidad})"
                         })
 
@@ -204,7 +244,7 @@ class StockAdmin():
         except Exception as e:
             self.producto_data.db.con.rollback()
             QMessageBox.critical(self.ventana, "Error", f"No se pudo completar la carga: {e}")
-                
+            
     def quitar_producto_seleccionado(self):
         fila_seleccionada = self.ventana.tablaStock.currentRow()
         
@@ -260,17 +300,16 @@ class StockAdmin():
                 
                 item_precio = QTableWidgetItem(f"${producto.precio:.2f}")
                 
-                # Mantenemos bloqueada únicamente la celda de la fecha por consistencia del sistema
                 item_fecha = QTableWidgetItem("--")
                 item_fecha.setFlags(item_fecha.flags() ^ Qt.ItemIsEditable)
                 
                 item_nombre.setData(Qt.UserRole, producto.id)
             
-                self.ventana.tablaBusqueda.setItem(fila, 0, item_nombre)    # Producto
-                self.ventana.tablaBusqueda.setItem(fila, 1, item_categoria) # Categoría 
-                self.ventana.tablaBusqueda.setItem(fila, 2, item_cantidad)  # Stock
-                self.ventana.tablaBusqueda.setItem(fila, 3, item_precio)    # Precio
-                self.ventana.tablaBusqueda.setItem(fila, 4, item_fecha)     # Última Edición
+                self.ventana.tablaBusqueda.setItem(fila, 0, item_nombre)    
+                self.ventana.tablaBusqueda.setItem(fila, 1, item_categoria) 
+                self.ventana.tablaBusqueda.setItem(fila, 2, item_cantidad)  
+                self.ventana.tablaBusqueda.setItem(fila, 3, item_precio)    
+                self.ventana.tablaBusqueda.setItem(fila, 4, item_fecha)     
 
                 self.ventana.tablaBusqueda.item(fila, 2).setTextAlignment(Qt.AlignCenter)
                 self.ventana.tablaBusqueda.item(fila, 3).setTextAlignment(Qt.AlignCenter)
@@ -281,7 +320,7 @@ class StockAdmin():
             QMessageBox.critical(self.ventana, "Error", f"Error al buscar: {e}")
 
     def actualizar_fecha_hora_edicion(self, fila, columna):
-        if columna == 2:
+        if columna in [0, 1, 2, 3]:
             ahora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             self.ventana.tablaBusqueda.cellChanged.disconnect()
             self.ventana.tablaBusqueda.setItem(fila, 4, QTableWidgetItem(ahora)) 
