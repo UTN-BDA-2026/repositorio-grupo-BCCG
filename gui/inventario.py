@@ -106,8 +106,16 @@ class InventarioAdmin(QDialog):
         if not termino:
             self.mostrar_en_tabla(self.productos)
             return
-
-        filtrados = [p for p in self.productos if termino in p.nombre.lower()]
+        categorias_traductor = {
+            1: "maquillajes",
+            2: "cosmeticos",
+            3: "accesorios",
+            4: "perfumería"
+        }
+        filtrados = [
+            p for p in self.productos 
+            if termino in p.nombre.lower() or termino in categorias_traductor.get(p.id_categoria, "general")
+        ]
         self.mostrar_en_tabla(filtrados)
 
     #Eliminar únicamente el producto seleccionado de la tablaInventario
